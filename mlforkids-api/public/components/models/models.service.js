@@ -150,9 +150,15 @@
 
         function isModelSavedInBrowser(modeltype, projectid) {
             try {
-                const type = modeltype === 'imgtfjs' ? 'images' : modeltype;
-                const modelid = getModelDbLocation(type, projectid);
-                if (storageService.getItem(modelid)) {
+                let location;
+                if (modeltype === 'numbers') {
+                    location = 'ml4k-models-numbers-' + projectid + '-date';
+                }
+                else {
+                    const type = modeltype === 'imgtfjs' ? 'images' : modeltype;
+                    location = getModelDbLocation(type, projectid);
+                }
+                if (storageService.getItem(location)) {
                     return true;
                 }
             }
@@ -165,20 +171,23 @@
 
         function clearSupportingModelData(savelocation, modeltype, projectid) {
             loggerService.debug('[ml4kmodels] deleting supporting model data');
-            clearModelSavedDate(savelocation);
 
             if (modeltype === 'numbers') {
                 storageService.removeItem('ml4k-models-numbers-' + projectid + '-features');
                 storageService.removeItem('ml4k-models-numbers-' + projectid + '-labels');
                 storageService.removeItem('ml4k-models-numbers-' + projectid + '-status');
+                storageService.removeItem('ml4k-models-numbers-' + projectid + '-date');
 
-                // can't delete the assets (-assets and -tree) without introducing a circular dependency,
+                // can't delete the assets (e.g. -model and -tree) without introducing a circular dependency,
                 //  so this has to be done in both numberTrainingService and ProjectsController
                 //
-                // browserStorageService.deleteAsset(projectid + '-assets');
+                // browserStorageService.deleteAsset(projectid + '-model');
                 // browserStorageService.deleteAsset(projectid + '-tree');
                 // browserStorageService.deleteAsset(projectid + '-dot');
                 // browserStorageService.deleteAsset(projectid + '-vocab');
+            }
+            else {
+                clearModelSavedDate(savelocation);
             }
 
             return Promise.resolve();
@@ -188,6 +197,10 @@
         function deleteModel(modeltype, projectid, retried) {
             loggerService.debug('[ml4kmodels] deleting stored model', projectid);
             var savelocation = getModelDbLocation(modeltype, projectid);
+            if (modeltype === 'numbers') {
+                return clearSupportingModelData(savelocation, modeltype, projectid);
+            }
+
             if (typeof tf !== 'undefined') {
                 return tf.io.removeModel(savelocation)
                     .then(function () {

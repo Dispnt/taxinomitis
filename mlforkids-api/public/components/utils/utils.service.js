@@ -37,7 +37,13 @@
             return loadScript('/static/bower_components/blueimp-canvas-to-blob/js/canvas-to-blob.min.js');
         }
         function loadNumberProjectSupport() {
-            return loadScript('/static/bower_components/tfjs-tfdf/tf-tfdf.min.js');
+            return loadScript('/static/bower_components/ydf-inference/jszip.min.js?v=1')
+                .then(() => {
+                    return loadScript('/static/bower_components/ydf-inference/inference.js?v=1');
+                })
+                .then(() => {
+                    return YDFInference();
+                });
         }
 
         function isInternetExplorer() {
@@ -47,7 +53,7 @@
         }
 
         function loadTensorFlow() {
-            return loadScript('/static/bower_components/tfjs/tf.min.js?v=1');
+            return loadScript('/static/bower_components/tfjs/tf.min.js?v=2');
         }
 
 

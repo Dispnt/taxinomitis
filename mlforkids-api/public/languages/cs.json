@@ -170,8 +170,6 @@
         "MANAGED": {
             "TITLE": "Vytvoření účtu <strong>spravované</strong> třídy",
             "INTRO": "Pokud chcete, aby Dale zřídil účet třídy, použijte níže uvedené tlačítko a zašlete e-mail s následujícími informacemi:",
-            "LIST_NUMBEROFSTUDENTS": "Kolik studentských účtů zhruba budete potřebovat",
-            "LIST_NAMEOFSCHOOL": "Název školy nebo kódovací skupiny, pro kterou je účet určen",
             "RESTRICTIONS": "Tato nabídka je dostupná pouze pro školy a neziskové studentské kluby programátorů.",
             "EMAIL": "E-mail"
         }
@@ -1621,6 +1619,14 @@
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-mobilenet.pdf"
             }
+        },
+        "VOICETUNER": {
+            "TITLE": "Voice Tuner",
+            "SUMMARY": "Use a computer that has been trained to recognize musical notes",
+            "DESCRIPTION": "Make a game in Scratch where the computer recognises what note you are singing",
+            "WORKSHEET_1": {
+                "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-voicetuner.pdf"
+            }
         }
     },
     "TEACHER": {
@@ -2059,7 +2065,7 @@
             "SPICE_1": "Tento model lze použít k rozpoznání zpívané noty z mikrofonu počítače.",
             "SPICE_2": "Nabízí bloky, které vrátí frekvenci rozpoznané noty a převedou ji na název nebo MIDI notu.",
             "SPICE_3": "Model nazvaný <a href='https://ai.googleblog.com/2019/11/spice-self-supervised-pitch-estimation.html'>SPICE</a> byl vycvičen k identifikaci dominantní výšky tónu ve zpívaném zvuku, včetně schopnosti rozpoznat zpívaný tón i v případě, že je na pozadí hudba a šum.",
-            "SPICE_4": "Tréninková data použitá pro tento model pocházejí ze souboru <a href='https://sites.google.com/site/unvoicedsoundseparation/mir-1k'>MIR-1K</a>, což je sada 1000 krátkých zvukových nahrávek amatérských zpěváků zpívajících karaoke.",
+            "SPICE_4": "Tréninková data použitá pro tento model pocházejí ze souboru <a href='https://paperswithcode.com/dataset/mir-1k'>MIR-1K</a>, což je sada 1000 krátkých zvukových nahrávek amatérských zpěváků zpívajících karaoke.",
             "SPICE_5": "Chcete-li tento model používat, musíte aplikaci Scratch povolit používání mikrofonu."
         },
         "IDEAS": {
