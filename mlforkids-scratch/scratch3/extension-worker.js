@@ -11,6 +11,589 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/microee/index.js":
+/*!***************************************!*\
+  !*** ./node_modules/microee/index.js ***!
+  \***************************************/
+/***/ ((module) => {
+
+function M() { this._events = {}; }
+M.prototype = {
+  on: function(ev, cb) {
+    this._events || (this._events = {});
+    var e = this._events;
+    (e[ev] || (e[ev] = [])).push(cb);
+    return this;
+  },
+  removeListener: function(ev, cb) {
+    var e = this._events[ev] || [], i;
+    for(i = e.length-1; i >= 0 && e[i]; i--){
+      if(e[i] === cb || e[i].cb === cb) { e.splice(i, 1); }
+    }
+  },
+  removeAllListeners: function(ev) {
+    if(!ev) { this._events = {}; }
+    else { this._events[ev] && (this._events[ev] = []); }
+  },
+  listeners: function(ev) {
+    return (this._events ? this._events[ev] || [] : []);
+  },
+  emit: function(ev) {
+    this._events || (this._events = {});
+    var args = Array.prototype.slice.call(arguments, 1), i, e = this._events[ev] || [];
+    for(i = e.length-1; i >= 0 && e[i]; i--){
+      e[i].apply(this, args);
+    }
+    return this;
+  },
+  when: function(ev, cb) {
+    return this.once(ev, cb, true);
+  },
+  once: function(ev, cb, when) {
+    if(!cb) return this;
+    function c() {
+      if(!when) this.removeListener(ev, c);
+      if(cb.apply(this, arguments) && when) this.removeListener(ev, c);
+    }
+    c.cb = cb;
+    this.on(ev, c);
+    return this;
+  }
+};
+M.mixin = function(dest) {
+  var o = M.prototype, k;
+  for (k in o) {
+    o.hasOwnProperty(k) && (dest.prototype[k] = o[k]);
+  }
+};
+module.exports = M;
+
+
+/***/ }),
+
+/***/ "./node_modules/minilog/lib/common/filter.js":
+/*!***************************************************!*\
+  !*** ./node_modules/minilog/lib/common/filter.js ***!
+  \***************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// default filter
+var Transform = __webpack_require__(/*! ./transform.js */ "./node_modules/minilog/lib/common/transform.js");
+
+var levelMap = { debug: 1, info: 2, warn: 3, error: 4 };
+
+function Filter() {
+  this.enabled = true;
+  this.defaultResult = true;
+  this.clear();
+}
+
+Transform.mixin(Filter);
+
+// allow all matching, with level >= given level
+Filter.prototype.allow = function(name, level) {
+  this._white.push({ n: name, l: levelMap[level] });
+  return this;
+};
+
+// deny all matching, with level <= given level
+Filter.prototype.deny = function(name, level) {
+  this._black.push({ n: name, l: levelMap[level] });
+  return this;
+};
+
+Filter.prototype.clear = function() {
+  this._white = [];
+  this._black = [];
+  return this;
+};
+
+function test(rule, name) {
+  // use .test for RegExps
+  return (rule.n.test ? rule.n.test(name) : rule.n == name);
+};
+
+Filter.prototype.test = function(name, level) {
+  var i, len = Math.max(this._white.length, this._black.length);
+  for(i = 0; i < len; i++) {
+    if(this._white[i] && test(this._white[i], name) && levelMap[level] >= this._white[i].l) {
+      return true;
+    }
+    if(this._black[i] && test(this._black[i], name) && levelMap[level] <= this._black[i].l) {
+      return false;
+    }
+  }
+  return this.defaultResult;
+};
+
+Filter.prototype.write = function(name, level, args) {
+  if(!this.enabled || this.test(name, level)) {
+    return this.emit('item', name, level, args);
+  }
+};
+
+module.exports = Filter;
+
+
+/***/ }),
+
+/***/ "./node_modules/minilog/lib/common/minilog.js":
+/*!****************************************************!*\
+  !*** ./node_modules/minilog/lib/common/minilog.js ***!
+  \****************************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+var Transform = __webpack_require__(/*! ./transform.js */ "./node_modules/minilog/lib/common/transform.js"),
+    Filter = __webpack_require__(/*! ./filter.js */ "./node_modules/minilog/lib/common/filter.js");
+
+var log = new Transform(),
+    slice = Array.prototype.slice;
+
+exports = module.exports = function create(name) {
+  var o   = function() { log.write(name, undefined, slice.call(arguments)); return o; };
+  o.debug = function() { log.write(name, 'debug', slice.call(arguments)); return o; };
+  o.info  = function() { log.write(name, 'info',  slice.call(arguments)); return o; };
+  o.warn  = function() { log.write(name, 'warn',  slice.call(arguments)); return o; };
+  o.error = function() { log.write(name, 'error', slice.call(arguments)); return o; };
+  o.log   = o.debug; // for interface compliance with Node and browser consoles
+  o.suggest = exports.suggest;
+  o.format = log.format;
+  return o;
+};
+
+// filled in separately
+exports.defaultBackend = exports.defaultFormatter = null;
+
+exports.pipe = function(dest) {
+  return log.pipe(dest);
+};
+
+exports.end = exports.unpipe = exports.disable = function(from) {
+  return log.unpipe(from);
+};
+
+exports.Transform = Transform;
+exports.Filter = Filter;
+// this is the default filter that's applied when .enable() is called normally
+// you can bypass it completely and set up your own pipes
+exports.suggest = new Filter();
+
+exports.enable = function() {
+  if(exports.defaultFormatter) {
+    return log.pipe(exports.suggest) // filter
+              .pipe(exports.defaultFormatter) // formatter
+              .pipe(exports.defaultBackend); // backend
+  }
+  return log.pipe(exports.suggest) // filter
+            .pipe(exports.defaultBackend); // formatter
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/minilog/lib/common/transform.js":
+/*!******************************************************!*\
+  !*** ./node_modules/minilog/lib/common/transform.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var microee = __webpack_require__(/*! microee */ "./node_modules/microee/index.js");
+
+// Implements a subset of Node's stream.Transform - in a cross-platform manner.
+function Transform() {}
+
+microee.mixin(Transform);
+
+// The write() signature is different from Node's
+// --> makes it much easier to work with objects in logs.
+// One of the lessons from v1 was that it's better to target
+// a good browser rather than the lowest common denominator
+// internally.
+// If you want to use external streams, pipe() to ./stringify.js first.
+Transform.prototype.write = function(name, level, args) {
+  this.emit('item', name, level, args);
+};
+
+Transform.prototype.end = function() {
+  this.emit('end');
+  this.removeAllListeners();
+};
+
+Transform.prototype.pipe = function(dest) {
+  var s = this;
+  // prevent double piping
+  s.emit('unpipe', dest);
+  // tell the dest that it's being piped to
+  dest.emit('pipe', s);
+
+  function onItem() {
+    dest.write.apply(dest, Array.prototype.slice.call(arguments));
+  }
+  function onEnd() { !dest._isStdio && dest.end(); }
+
+  s.on('item', onItem);
+  s.on('end', onEnd);
+
+  s.when('unpipe', function(from) {
+    var match = (from === dest) || typeof from == 'undefined';
+    if(match) {
+      s.removeListener('item', onItem);
+      s.removeListener('end', onEnd);
+      dest.emit('unpipe');
+    }
+    return match;
+  });
+
+  return dest;
+};
+
+Transform.prototype.unpipe = function(from) {
+  this.emit('unpipe', from);
+  return this;
+};
+
+Transform.prototype.format = function(dest) {
+  throw new Error([
+    'Warning: .format() is deprecated in Minilog v2! Use .pipe() instead. For example:',
+    'var Minilog = require(\'minilog\');',
+    'Minilog',
+    '  .pipe(Minilog.backends.console.formatClean)',
+    '  .pipe(Minilog.backends.console);'].join('\n'));
+};
+
+Transform.mixin = function(dest) {
+  var o = Transform.prototype, k;
+  for (k in o) {
+    o.hasOwnProperty(k) && (dest.prototype[k] = o[k]);
+  }
+};
+
+module.exports = Transform;
+
+
+/***/ }),
+
+/***/ "./node_modules/minilog/lib/web/array.js":
+/*!***********************************************!*\
+  !*** ./node_modules/minilog/lib/web/array.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/minilog/lib/common/transform.js"),
+    cache = [ ];
+
+var logger = new Transform();
+
+logger.write = function(name, level, args) {
+  cache.push([ name, level, args ]);
+};
+
+// utility functions
+logger.get = function() { return cache; };
+logger.empty = function() { cache = []; };
+
+module.exports = logger;
+
+
+/***/ }),
+
+/***/ "./node_modules/minilog/lib/web/console.js":
+/*!*************************************************!*\
+  !*** ./node_modules/minilog/lib/web/console.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/minilog/lib/common/transform.js");
+
+var newlines = /\n+$/,
+    logger = new Transform();
+
+logger.write = function(name, level, args) {
+  var i = args.length-1;
+  if (typeof console === 'undefined' || !console.log) {
+    return;
+  }
+  if(console.log.apply) {
+    return console.log.apply(console, [name, level].concat(args));
+  } else if(JSON && JSON.stringify) {
+    // console.log.apply is undefined in IE8 and IE9
+    // for IE8/9: make console.log at least a bit less awful
+    if(args[i] && typeof args[i] == 'string') {
+      args[i] = args[i].replace(newlines, '');
+    }
+    try {
+      for(i = 0; i < args.length; i++) {
+        args[i] = JSON.stringify(args[i]);
+      }
+    } catch(e) {}
+    console.log(args.join(' '));
+  }
+};
+
+logger.formatters = ['color', 'minilog'];
+logger.color = __webpack_require__(/*! ./formatters/color.js */ "./node_modules/minilog/lib/web/formatters/color.js");
+logger.minilog = __webpack_require__(/*! ./formatters/minilog.js */ "./node_modules/minilog/lib/web/formatters/minilog.js");
+
+module.exports = logger;
+
+
+/***/ }),
+
+/***/ "./node_modules/minilog/lib/web/formatters/color.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/minilog/lib/web/formatters/color.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Transform = __webpack_require__(/*! ../../common/transform.js */ "./node_modules/minilog/lib/common/transform.js"),
+    color = __webpack_require__(/*! ./util.js */ "./node_modules/minilog/lib/web/formatters/util.js");
+
+var colors = { debug: ['cyan'], info: ['purple' ], warn: [ 'yellow', true ], error: [ 'red', true ] },
+    logger = new Transform();
+
+logger.write = function(name, level, args) {
+  var fn = console.log;
+  if(console[level] && console[level].apply) {
+    fn = console[level];
+    fn.apply(console, [ '%c'+name+' %c'+level, color('gray'), color.apply(color, colors[level])].concat(args));
+  }
+};
+
+// NOP, because piping the formatted logs can only cause trouble.
+logger.pipe = function() { };
+
+module.exports = logger;
+
+
+/***/ }),
+
+/***/ "./node_modules/minilog/lib/web/formatters/minilog.js":
+/*!************************************************************!*\
+  !*** ./node_modules/minilog/lib/web/formatters/minilog.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Transform = __webpack_require__(/*! ../../common/transform.js */ "./node_modules/minilog/lib/common/transform.js"),
+    color = __webpack_require__(/*! ./util.js */ "./node_modules/minilog/lib/web/formatters/util.js"),
+    colors = { debug: ['gray'], info: ['purple' ], warn: [ 'yellow', true ], error: [ 'red', true ] },
+    logger = new Transform();
+
+logger.write = function(name, level, args) {
+  var fn = console.log;
+  if(level != 'debug' && console[level]) {
+    fn = console[level];
+  }
+
+  var subset = [], i = 0;
+  if(level != 'info') {
+    for(; i < args.length; i++) {
+      if(typeof args[i] != 'string') break;
+    }
+    fn.apply(console, [ '%c'+name +' '+ args.slice(0, i).join(' '), color.apply(color, colors[level]) ].concat(args.slice(i)));
+  } else {
+    fn.apply(console, [ '%c'+name, color.apply(color, colors[level]) ].concat(args));
+  }
+};
+
+// NOP, because piping the formatted logs can only cause trouble.
+logger.pipe = function() { };
+
+module.exports = logger;
+
+
+/***/ }),
+
+/***/ "./node_modules/minilog/lib/web/formatters/util.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/minilog/lib/web/formatters/util.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+var hex = {
+  black: '#000',
+  red: '#c23621',
+  green: '#25bc26',
+  yellow: '#bbbb00',
+  blue:  '#492ee1',
+  magenta: '#d338d3',
+  cyan: '#33bbc8',
+  gray: '#808080',
+  purple: '#708'
+};
+function color(fg, isInverse) {
+  if(isInverse) {
+    return 'color: #fff; background: '+hex[fg]+';';
+  } else {
+    return 'color: '+hex[fg]+';';
+  }
+}
+
+module.exports = color;
+
+
+/***/ }),
+
+/***/ "./node_modules/minilog/lib/web/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/minilog/lib/web/index.js ***!
+  \***********************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+var Minilog = __webpack_require__(/*! ../common/minilog.js */ "./node_modules/minilog/lib/common/minilog.js");
+
+var oldEnable = Minilog.enable,
+    oldDisable = Minilog.disable,
+    isChrome = (typeof navigator != 'undefined' && /chrome/i.test(navigator.userAgent)),
+    console = __webpack_require__(/*! ./console.js */ "./node_modules/minilog/lib/web/console.js");
+
+// Use a more capable logging backend if on Chrome
+Minilog.defaultBackend = (isChrome ? console.minilog : console);
+
+// apply enable inputs from localStorage and from the URL
+if(typeof window != 'undefined') {
+  try {
+    Minilog.enable(JSON.parse(window.localStorage['minilogSettings']));
+  } catch(e) {}
+  if(window.location && window.location.search) {
+    var match = RegExp('[?&]minilog=([^&]*)').exec(window.location.search);
+    match && Minilog.enable(decodeURIComponent(match[1]));
+  }
+}
+
+// Make enable also add to localStorage
+Minilog.enable = function() {
+  oldEnable.call(Minilog, true);
+  try { window.localStorage['minilogSettings'] = JSON.stringify(true); } catch(e) {}
+  return this;
+};
+
+Minilog.disable = function() {
+  oldDisable.call(Minilog);
+  try { delete window.localStorage.minilogSettings; } catch(e) {}
+  return this;
+};
+
+exports = module.exports = Minilog;
+
+exports.backends = {
+  array: __webpack_require__(/*! ./array.js */ "./node_modules/minilog/lib/web/array.js"),
+  browser: Minilog.defaultBackend,
+  localStorage: __webpack_require__(/*! ./localstorage.js */ "./node_modules/minilog/lib/web/localstorage.js"),
+  jQuery: __webpack_require__(/*! ./jquery_simple.js */ "./node_modules/minilog/lib/web/jquery_simple.js")
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/minilog/lib/web/jquery_simple.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/minilog/lib/web/jquery_simple.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/minilog/lib/common/transform.js");
+
+var cid = new Date().valueOf().toString(36);
+
+function AjaxLogger(options) {
+  this.url = options.url || '';
+  this.cache = [];
+  this.timer = null;
+  this.interval = options.interval || 30*1000;
+  this.enabled = true;
+  this.jQuery = window.jQuery;
+  this.extras = {};
+}
+
+Transform.mixin(AjaxLogger);
+
+AjaxLogger.prototype.write = function(name, level, args) {
+  if(!this.timer) { this.init(); }
+  this.cache.push([name, level].concat(args));
+};
+
+AjaxLogger.prototype.init = function() {
+  if(!this.enabled || !this.jQuery) return;
+  var self = this;
+  this.timer = setTimeout(function() {
+    var i, logs = [], ajaxData, url = self.url;
+    if(self.cache.length == 0) return self.init();
+    // Test each log line and only log the ones that are valid (e.g. don't have circular references).
+    // Slight performance hit but benefit is we log all valid lines.
+    for(i = 0; i < self.cache.length; i++) {
+      try {
+        JSON.stringify(self.cache[i]);
+        logs.push(self.cache[i]);
+      } catch(e) { }
+    }
+    if(self.jQuery.isEmptyObject(self.extras)) {
+        ajaxData = JSON.stringify({ logs: logs });
+        url = self.url + '?client_id=' + cid;
+    } else {
+        ajaxData = JSON.stringify(self.jQuery.extend({logs: logs}, self.extras));
+    }
+
+    self.jQuery.ajax(url, {
+      type: 'POST',
+      cache: false,
+      processData: false,
+      data: ajaxData,
+      contentType: 'application/json',
+      timeout: 10000
+    }).success(function(data, status, jqxhr) {
+      if(data.interval) {
+        self.interval = Math.max(1000, data.interval);
+      }
+    }).error(function() {
+      self.interval = 30000;
+    }).always(function() {
+      self.init();
+    });
+    self.cache = [];
+  }, this.interval);
+};
+
+AjaxLogger.prototype.end = function() {};
+
+// wait until jQuery is defined. Useful if you don't control the load order.
+AjaxLogger.jQueryWait = function(onDone) {
+  if(typeof window !== 'undefined' && (window.jQuery || window.$)) {
+    return onDone(window.jQuery || window.$);
+  } else if (typeof window !== 'undefined') {
+    setTimeout(function() { AjaxLogger.jQueryWait(onDone); }, 200);
+  }
+};
+
+module.exports = AjaxLogger;
+
+
+/***/ }),
+
+/***/ "./node_modules/minilog/lib/web/localstorage.js":
+/*!******************************************************!*\
+  !*** ./node_modules/minilog/lib/web/localstorage.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/minilog/lib/common/transform.js"),
+    cache = false;
+
+var logger = new Transform();
+
+logger.write = function(name, level, args) {
+  if(typeof window == 'undefined' || typeof JSON == 'undefined' || !JSON.stringify || !JSON.parse) return;
+  try {
+    if(!cache) { cache = (window.localStorage.minilog ? JSON.parse(window.localStorage.minilog) : []); }
+    cache.push([ new Date().toString(), name, level, args ]);
+    window.localStorage.minilog = JSON.stringify(cache);
+  } catch(e) {}
+};
+
+module.exports = logger;
+
+/***/ }),
+
 /***/ "./src/dispatch/shared-dispatch.js":
 /*!*****************************************!*\
   !*** ./src/dispatch/shared-dispatch.js ***!
@@ -23,6 +606,7 @@ const mlforkidsImages = __webpack_require__(/*! ../mlforkids-components/images *
 const mlforkidsRegression = __webpack_require__(/*! ../mlforkids-components/regression */ "./src/mlforkids-components/regression/index.js");
 const mlforkidsNumbers = __webpack_require__(/*! ../mlforkids-components/numbers */ "./src/mlforkids-components/numbers/index.js");
 const mlforkidsTensorFlow = __webpack_require__(/*! ../mlforkids-components/tensorflow */ "./src/mlforkids-components/tensorflow/index.js");
+const mlforkidsWebllm = __webpack_require__(/*! ../mlforkids-components/webllm */ "./src/mlforkids-components/webllm/index.js");
 const mlforkidsStorage = __webpack_require__(/*! ../mlforkids-components/storage */ "./src/mlforkids-components/storage/index.js");
 
 /**
@@ -417,6 +1001,17 @@ class SharedDispatch {
         this.mlforkidsTensorFlowSupport.initProject(message.mlforkidstensorflow.data, worker);
       } else if (message.mlforkidstensorflow.command === 'classify') {
         this.mlforkidsTensorFlowSupport.classifyData(message.mlforkidstensorflow.data, worker);
+      }
+    } else if (message.mlforkidswebllm) {
+      if (message.mlforkidswebllm.command === 'init') {
+        if (!this.mlforkidsWebLlmSupport) {
+          this.mlforkidsWebLlmSupport = new mlforkidsWebllm();
+        }
+        this.mlforkidsWebLlmSupport.initModel(message.mlforkidswebllm.data, worker);
+      } else if (message.mlforkidswebllm.command === 'clear') {
+        this.mlforkidsWebLlmSupport.clearContext(message.mlforkidswebllm.data);
+      } else if (message.mlforkidswebllm.command === 'prompt') {
+        this.mlforkidsWebLlmSupport.promptModel(message.mlforkidswebllm.data, worker);
       }
     } else if (typeof message.responseId === 'undefined') {
       log.error("Dispatch caught malformed message from a worker: ".concat(JSON.stringify(event)));
@@ -1067,39 +1662,70 @@ class ML4KidsImageTraining {
         }
       }
       let epochs = 10;
-      if (trainingdata.length > 55) {
+      if (trainingdata.length > 100) {
+        epochs = 20;
+      } else if (trainingdata.length > 50) {
         epochs = 15;
       }
-      that.PROJECTS[projectid].transferModel.fit(xs, ys, {
-        batchSize: 10,
-        epochs: epochs,
-        callbacks: {
-          onEpochEnd: function onEpochEnd(epoch, logs) {
-            console.log('[mlforkids] ML4KidsImageTraining epoch ' + epoch + ' loss ' + logs.loss);
-          },
-          onTrainEnd: function onTrainEnd() {
-            console.log('[mlforkids] ML4KidsImageTraining training complete');
-            that._saveModel(projectid);
-            that.PROJECTS[projectid].state = 'TRAINED';
-            that.PROJECTS[projectid].usingRestoredModel = false;
-            worker.postMessage({
-              mlforkidsimage: 'modelready',
-              data: {
-                projectid
-              }
-            });
-          }
-        }
-      });
+      that._trainTfjsModel(projectid, epochs, xs, ys, worker);
     }).catch(err => {
       console.log('[mlforkids] ML4KidsImageTraining failed to train model', err);
       this.PROJECTS[projectid].state = 'ERROR';
+      this.PROJECTS[projectid].usingRestoredModel = false;
       worker.postMessage({
         mlforkidsimage: 'modelfailed',
         data: {
           projectid
         }
       });
+    });
+  }
+  _trainTfjsModel(projectid, epochs, xs, ys, worker) {
+    let aborted = false;
+    this.PROJECTS[projectid].transferModel.fit(xs, ys, {
+      batchSize: 10,
+      epochs: epochs,
+      callbacks: {
+        onEpochEnd: (epoch, logs) => {
+          console.log('[mlforkids] ML4KidsImageTraining epoch ' + epoch + ' loss ' + logs.loss);
+          if (isNaN(logs.loss)) {
+            console.log('[ml4kimages] ML4KidsImageTraining aborting training');
+            this.PROJECTS[projectid].transferModel.stopTraining = true;
+            aborted = true;
+          }
+        },
+        onTrainEnd: () => {
+          if (aborted) {
+            if (epochs >= 10) {
+              // retry with a smaller epoch
+              this.PROJECTS[projectid].transferModel = this.prepareTransferLearningModel(this.PROJECTS[projectid].modelNumClasses);
+              return this._trainTfjsModel(projectid, epochs > 10 ? 10 : 5, xs, ys, worker);
+            } else {
+              // already tried with only 5 epochs - give up
+              console.log('[mlforkids] ML4KidsImageTraining failed to train model');
+              this.PROJECTS[projectid].state = 'ERROR';
+              this.PROJECTS[projectid].usingRestoredModel = false;
+              worker.postMessage({
+                mlforkidsimage: 'modelfailed',
+                data: {
+                  projectid
+                }
+              });
+              return;
+            }
+          }
+          console.log('[mlforkids] ML4KidsImageTraining training complete');
+          this._saveModel(projectid);
+          this.PROJECTS[projectid].state = 'TRAINED';
+          this.PROJECTS[projectid].usingRestoredModel = false;
+          worker.postMessage({
+            mlforkidsimage: 'modelready',
+            data: {
+              projectid
+            }
+          });
+        }
+      }
     });
   }
   _getTensorForImageData(_ref) {
@@ -2222,6 +2848,13 @@ class ML4KidsLocalStorage {
         console.log('[ml4kstorage] projects database closed');
         delete this.projectsDbHandle;
       };
+      this.projectsDbHandle.onversionchange = () => {
+        console.log('[ml4kstorage] external change to projects database');
+        if (this.projectsDbHandle) {
+          this.projectsDbHandle.close();
+          delete this.projectsDbHandle;
+        }
+      };
     }
   }
   async requiresTrainingDatabase(projectId) {
@@ -2231,6 +2864,13 @@ class ML4KidsLocalStorage {
         console.log('[ml4kstorage] training database closed', projectId);
         delete this.trainingDataDatabases[projectId];
       };
+      this.trainingDataDatabases[projectId].onversionchange = () => {
+        console.log('[ml4kstorage] external change to training database');
+        if (this.trainingDataDatabases[projectId]) {
+          this.trainingDataDatabases[projectId].close();
+          delete this.trainingDataDatabases[projectId];
+        }
+      };
     }
   }
   async requiresAssetsDatabase() {
@@ -2239,6 +2879,13 @@ class ML4KidsLocalStorage {
       this.assetsDbHandle.onclose = () => {
         console.log('[ml4kstorage] assets database closed');
         delete this.assetsDbHandle;
+      };
+      this.assetsDbHandle.onversionchange = () => {
+        console.log('[ml4kstorage] external change to assets database');
+        if (this.assetsDbHandle) {
+          this.assetsDbHandle.close();
+          delete this.assetsDbHandle;
+        }
       };
     }
   }
@@ -2329,7 +2976,7 @@ class ML4KidsLocalStorage {
     const readRequest = projectsTable.get(this.requiresIntegerId(projectId));
     const readEvent = await this.promisifyIndexedDbRequest(readRequest);
     const projectObject = this.requiresResult(readEvent);
-    if (!projectObject.labels.includes(label)) {
+    if (!projectObject.labels.map(l => l.toLowerCase()).includes(label.toLowerCase())) {
       projectObject.labels.push(label);
       const updateRequest = projectsTable.put(projectObject);
       await this.promisifyIndexedDbRequest(updateRequest);
@@ -2675,6 +3322,176 @@ module.exports = ML4KidsTensorFlow;
 
 /***/ }),
 
+/***/ "./src/mlforkids-components/webllm/index.js":
+/*!**************************************************!*\
+  !*** ./src/mlforkids-components/webllm/index.js ***!
+  \**************************************************/
+/***/ ((module) => {
+
+class ML4KidsWebLlm {
+  constructor() {
+    this.MODELS = {};
+    this.state = 'INIT';
+  }
+  initModel(requestdata, worker) {
+    const modelid = requestdata.modelid;
+    const contextwindow = requestdata.contextwindow;
+    this.MODELS[modelid + '-' + contextwindow] = {
+      state: 'INIT',
+      busy: false,
+      messages: []
+    };
+    this._loadWebLlmProjectSupport().then(() => {
+      this.MODELS[modelid + '-' + contextwindow].webllmEngine = new window.mlforkidsWebLlm.MLCEngine();
+      const modelCfg = {
+        context_window_size: contextwindow
+      };
+      console.log('[mlforkids] loading model', modelid, modelCfg);
+      return this.MODELS[modelid + '-' + contextwindow].webllmEngine.reload(modelid, modelCfg);
+    }).then(() => {
+      console.log('[mlforkids] loaded model');
+      this.MODELS[modelid + '-' + contextwindow].state = 'READY';
+      worker.postMessage({
+        mlforkidswebllm: 'modelready',
+        data: {
+          modelid,
+          contextwindow
+        }
+      });
+    }).catch(err => {
+      console.log('[mlforkids] failed to load model', err);
+      this.MODELS[modelid + '-' + contextwindow].state = 'ERROR';
+      worker.postMessage({
+        mlforkidswebllm: 'modelfailed',
+        data: {
+          modelid,
+          contextwindow
+        }
+      });
+    });
+  }
+  clearContext(requestdata) {
+    const modelid = requestdata.modelid;
+    const contextwindow = requestdata.contextwindow;
+    const modelKey = modelid + '-' + contextwindow;
+    if (modelKey in this.MODELS === false) {
+      console.log('[mlforkids] Unknown model ' + modelKey);
+      return;
+    }
+    this.MODELS[modelKey].messages = [];
+  }
+  promptModel(requestdata, worker) {
+    const requestid = requestdata.requestid;
+    const modelid = requestdata.modelid;
+    const contextwindow = requestdata.contextwindow;
+    const input = requestdata.input;
+    const temperature = requestdata.temperature;
+    const top_p = requestdata.top_p;
+    const modelKey = modelid + '-' + contextwindow;
+    if (modelKey in this.MODELS === false) {
+      console.log('[mlforkids] Unknown model ' + modelKey);
+      return;
+    }
+    if (this.MODELS[modelKey].state !== 'READY') {
+      console.log('[mlforkids] Model not ready');
+      return;
+    }
+    if (this.MODELS[modelKey].busy) {
+      console.log('[mlforkids] Model is busy');
+      return;
+    }
+    this.MODELS[modelKey].busy = true;
+    this._submitPrompt(requestid, modelid, contextwindow, modelKey, temperature, top_p, input, worker);
+  }
+  _submitPrompt(requestid, modelid, contextwindow, modelKey, temperature, top_p, input, worker) {
+    if (this.MODELS[modelKey].messages.length === 0) {
+      this.MODELS[modelKey].messages.push({
+        role: 'system',
+        content: 'You are a friendly and supportive AI assistant for children. ' + 'Use simple, clear, and encouraging language. Keep responses short, ' + 'engaging, and educational. Avoiding harmful, inappropriate, ' + 'scary, or violent content. ' + 'Always be positive and constructive, and avoid sarcasm or harsh language. ' + 'Promote digital safety by reminding children not to share personal ' + 'information. If a child asks something unsafe, gently guide them toward ' + 'a trusted adult.'
+      });
+    }
+    this.MODELS[modelKey].messages.push({
+      role: 'user',
+      content: input
+    });
+    const prompt = {
+      messages: this.MODELS[modelKey].messages,
+      temperature,
+      top_p
+    };
+    console.log(prompt);
+    this.MODELS[modelid + '-' + contextwindow].webllmEngine.chat.completions.create(prompt).then(reply => {
+      console.log(reply);
+      const response = reply.choices[0].message.content;
+      worker.postMessage({
+        mlforkidswebllm: 'promptresponse',
+        data: {
+          requestid,
+          modelid,
+          contextwindow,
+          response
+        }
+      });
+      this.MODELS[modelKey].messages.push({
+        role: 'assistant',
+        content: response
+      });
+      this.MODELS[modelKey].busy = false;
+    }).catch(err => {
+      console.log('[mlforkids] language model fail', err);
+      if (err.message.includes('tokens exceed context window size') && this.MODELS[modelKey].messages.length > 1) {
+        this.MODELS[modelKey].messages.pop();
+        this.MODELS[modelKey].messages.splice(1, 1);
+        this._submitPrompt(requestid, modelid, contextwindow, modelKey, temperature, top_p, input, worker);
+      } else {
+        worker.postMessage({
+          mlforkidswebllm: 'promptresponse',
+          data: {
+            requestid,
+            modelid,
+            contextwindow,
+            response: 'Unable to respond'
+          }
+        });
+        this.MODELS[modelKey].busy = false;
+      }
+    });
+  }
+  _loadWebLlmProjectSupport() {
+    console.log('[mlforkids] loading web-llm script');
+    return new Promise((resolve, reject) => {
+      if (window.mlforkidsWebLlm) {
+        return resolve(window.mlforkidsWebLlm);
+      }
+      const scriptObj = document.createElement('script');
+      scriptObj.src = './mlforkids-thirdparty-libs/web-llm/index.js';
+      scriptObj.onload = () => {
+        this._waitForWebLlmModule(resolve);
+        scriptObj.remove();
+      };
+      scriptObj.onerror = err => {
+        this.state = 'ERROR';
+        console.log('[mlforkids] Failed to load web-llm module', err);
+        reject();
+      };
+      document.head.appendChild(scriptObj);
+    });
+  }
+  _waitForWebLlmModule(resolve) {
+    if (window.mlforkidsWebLlm) {
+      console.log('[mlforkids] loaded web-llm');
+      resolve(window.mlforkidsWebLlm);
+    } else {
+      setTimeout(() => {
+        this._waitForWebLlmModule(resolve);
+      }, 3000);
+    }
+  }
+}
+module.exports = ML4KidsWebLlm;
+
+/***/ }),
+
 /***/ "./src/util/log.js":
 /*!*************************!*\
   !*** ./src/util/log.js ***!
@@ -2684,589 +3501,6 @@ module.exports = ML4KidsTensorFlow;
 const minilog = __webpack_require__(/*! minilog */ "./node_modules/minilog/lib/web/index.js");
 minilog.enable();
 module.exports = minilog('vm');
-
-/***/ }),
-
-/***/ "./node_modules/microee/index.js":
-/*!***************************************!*\
-  !*** ./node_modules/microee/index.js ***!
-  \***************************************/
-/***/ ((module) => {
-
-function M() { this._events = {}; }
-M.prototype = {
-  on: function(ev, cb) {
-    this._events || (this._events = {});
-    var e = this._events;
-    (e[ev] || (e[ev] = [])).push(cb);
-    return this;
-  },
-  removeListener: function(ev, cb) {
-    var e = this._events[ev] || [], i;
-    for(i = e.length-1; i >= 0 && e[i]; i--){
-      if(e[i] === cb || e[i].cb === cb) { e.splice(i, 1); }
-    }
-  },
-  removeAllListeners: function(ev) {
-    if(!ev) { this._events = {}; }
-    else { this._events[ev] && (this._events[ev] = []); }
-  },
-  listeners: function(ev) {
-    return (this._events ? this._events[ev] || [] : []);
-  },
-  emit: function(ev) {
-    this._events || (this._events = {});
-    var args = Array.prototype.slice.call(arguments, 1), i, e = this._events[ev] || [];
-    for(i = e.length-1; i >= 0 && e[i]; i--){
-      e[i].apply(this, args);
-    }
-    return this;
-  },
-  when: function(ev, cb) {
-    return this.once(ev, cb, true);
-  },
-  once: function(ev, cb, when) {
-    if(!cb) return this;
-    function c() {
-      if(!when) this.removeListener(ev, c);
-      if(cb.apply(this, arguments) && when) this.removeListener(ev, c);
-    }
-    c.cb = cb;
-    this.on(ev, c);
-    return this;
-  }
-};
-M.mixin = function(dest) {
-  var o = M.prototype, k;
-  for (k in o) {
-    o.hasOwnProperty(k) && (dest.prototype[k] = o[k]);
-  }
-};
-module.exports = M;
-
-
-/***/ }),
-
-/***/ "./node_modules/minilog/lib/common/filter.js":
-/*!***************************************************!*\
-  !*** ./node_modules/minilog/lib/common/filter.js ***!
-  \***************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-// default filter
-var Transform = __webpack_require__(/*! ./transform.js */ "./node_modules/minilog/lib/common/transform.js");
-
-var levelMap = { debug: 1, info: 2, warn: 3, error: 4 };
-
-function Filter() {
-  this.enabled = true;
-  this.defaultResult = true;
-  this.clear();
-}
-
-Transform.mixin(Filter);
-
-// allow all matching, with level >= given level
-Filter.prototype.allow = function(name, level) {
-  this._white.push({ n: name, l: levelMap[level] });
-  return this;
-};
-
-// deny all matching, with level <= given level
-Filter.prototype.deny = function(name, level) {
-  this._black.push({ n: name, l: levelMap[level] });
-  return this;
-};
-
-Filter.prototype.clear = function() {
-  this._white = [];
-  this._black = [];
-  return this;
-};
-
-function test(rule, name) {
-  // use .test for RegExps
-  return (rule.n.test ? rule.n.test(name) : rule.n == name);
-};
-
-Filter.prototype.test = function(name, level) {
-  var i, len = Math.max(this._white.length, this._black.length);
-  for(i = 0; i < len; i++) {
-    if(this._white[i] && test(this._white[i], name) && levelMap[level] >= this._white[i].l) {
-      return true;
-    }
-    if(this._black[i] && test(this._black[i], name) && levelMap[level] <= this._black[i].l) {
-      return false;
-    }
-  }
-  return this.defaultResult;
-};
-
-Filter.prototype.write = function(name, level, args) {
-  if(!this.enabled || this.test(name, level)) {
-    return this.emit('item', name, level, args);
-  }
-};
-
-module.exports = Filter;
-
-
-/***/ }),
-
-/***/ "./node_modules/minilog/lib/common/minilog.js":
-/*!****************************************************!*\
-  !*** ./node_modules/minilog/lib/common/minilog.js ***!
-  \****************************************************/
-/***/ ((module, exports, __webpack_require__) => {
-
-var Transform = __webpack_require__(/*! ./transform.js */ "./node_modules/minilog/lib/common/transform.js"),
-    Filter = __webpack_require__(/*! ./filter.js */ "./node_modules/minilog/lib/common/filter.js");
-
-var log = new Transform(),
-    slice = Array.prototype.slice;
-
-exports = module.exports = function create(name) {
-  var o   = function() { log.write(name, undefined, slice.call(arguments)); return o; };
-  o.debug = function() { log.write(name, 'debug', slice.call(arguments)); return o; };
-  o.info  = function() { log.write(name, 'info',  slice.call(arguments)); return o; };
-  o.warn  = function() { log.write(name, 'warn',  slice.call(arguments)); return o; };
-  o.error = function() { log.write(name, 'error', slice.call(arguments)); return o; };
-  o.log   = o.debug; // for interface compliance with Node and browser consoles
-  o.suggest = exports.suggest;
-  o.format = log.format;
-  return o;
-};
-
-// filled in separately
-exports.defaultBackend = exports.defaultFormatter = null;
-
-exports.pipe = function(dest) {
-  return log.pipe(dest);
-};
-
-exports.end = exports.unpipe = exports.disable = function(from) {
-  return log.unpipe(from);
-};
-
-exports.Transform = Transform;
-exports.Filter = Filter;
-// this is the default filter that's applied when .enable() is called normally
-// you can bypass it completely and set up your own pipes
-exports.suggest = new Filter();
-
-exports.enable = function() {
-  if(exports.defaultFormatter) {
-    return log.pipe(exports.suggest) // filter
-              .pipe(exports.defaultFormatter) // formatter
-              .pipe(exports.defaultBackend); // backend
-  }
-  return log.pipe(exports.suggest) // filter
-            .pipe(exports.defaultBackend); // formatter
-};
-
-
-
-/***/ }),
-
-/***/ "./node_modules/minilog/lib/common/transform.js":
-/*!******************************************************!*\
-  !*** ./node_modules/minilog/lib/common/transform.js ***!
-  \******************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var microee = __webpack_require__(/*! microee */ "./node_modules/microee/index.js");
-
-// Implements a subset of Node's stream.Transform - in a cross-platform manner.
-function Transform() {}
-
-microee.mixin(Transform);
-
-// The write() signature is different from Node's
-// --> makes it much easier to work with objects in logs.
-// One of the lessons from v1 was that it's better to target
-// a good browser rather than the lowest common denominator
-// internally.
-// If you want to use external streams, pipe() to ./stringify.js first.
-Transform.prototype.write = function(name, level, args) {
-  this.emit('item', name, level, args);
-};
-
-Transform.prototype.end = function() {
-  this.emit('end');
-  this.removeAllListeners();
-};
-
-Transform.prototype.pipe = function(dest) {
-  var s = this;
-  // prevent double piping
-  s.emit('unpipe', dest);
-  // tell the dest that it's being piped to
-  dest.emit('pipe', s);
-
-  function onItem() {
-    dest.write.apply(dest, Array.prototype.slice.call(arguments));
-  }
-  function onEnd() { !dest._isStdio && dest.end(); }
-
-  s.on('item', onItem);
-  s.on('end', onEnd);
-
-  s.when('unpipe', function(from) {
-    var match = (from === dest) || typeof from == 'undefined';
-    if(match) {
-      s.removeListener('item', onItem);
-      s.removeListener('end', onEnd);
-      dest.emit('unpipe');
-    }
-    return match;
-  });
-
-  return dest;
-};
-
-Transform.prototype.unpipe = function(from) {
-  this.emit('unpipe', from);
-  return this;
-};
-
-Transform.prototype.format = function(dest) {
-  throw new Error([
-    'Warning: .format() is deprecated in Minilog v2! Use .pipe() instead. For example:',
-    'var Minilog = require(\'minilog\');',
-    'Minilog',
-    '  .pipe(Minilog.backends.console.formatClean)',
-    '  .pipe(Minilog.backends.console);'].join('\n'));
-};
-
-Transform.mixin = function(dest) {
-  var o = Transform.prototype, k;
-  for (k in o) {
-    o.hasOwnProperty(k) && (dest.prototype[k] = o[k]);
-  }
-};
-
-module.exports = Transform;
-
-
-/***/ }),
-
-/***/ "./node_modules/minilog/lib/web/array.js":
-/*!***********************************************!*\
-  !*** ./node_modules/minilog/lib/web/array.js ***!
-  \***********************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/minilog/lib/common/transform.js"),
-    cache = [ ];
-
-var logger = new Transform();
-
-logger.write = function(name, level, args) {
-  cache.push([ name, level, args ]);
-};
-
-// utility functions
-logger.get = function() { return cache; };
-logger.empty = function() { cache = []; };
-
-module.exports = logger;
-
-
-/***/ }),
-
-/***/ "./node_modules/minilog/lib/web/console.js":
-/*!*************************************************!*\
-  !*** ./node_modules/minilog/lib/web/console.js ***!
-  \*************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/minilog/lib/common/transform.js");
-
-var newlines = /\n+$/,
-    logger = new Transform();
-
-logger.write = function(name, level, args) {
-  var i = args.length-1;
-  if (typeof console === 'undefined' || !console.log) {
-    return;
-  }
-  if(console.log.apply) {
-    return console.log.apply(console, [name, level].concat(args));
-  } else if(JSON && JSON.stringify) {
-    // console.log.apply is undefined in IE8 and IE9
-    // for IE8/9: make console.log at least a bit less awful
-    if(args[i] && typeof args[i] == 'string') {
-      args[i] = args[i].replace(newlines, '');
-    }
-    try {
-      for(i = 0; i < args.length; i++) {
-        args[i] = JSON.stringify(args[i]);
-      }
-    } catch(e) {}
-    console.log(args.join(' '));
-  }
-};
-
-logger.formatters = ['color', 'minilog'];
-logger.color = __webpack_require__(/*! ./formatters/color.js */ "./node_modules/minilog/lib/web/formatters/color.js");
-logger.minilog = __webpack_require__(/*! ./formatters/minilog.js */ "./node_modules/minilog/lib/web/formatters/minilog.js");
-
-module.exports = logger;
-
-
-/***/ }),
-
-/***/ "./node_modules/minilog/lib/web/formatters/color.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/minilog/lib/web/formatters/color.js ***!
-  \**********************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var Transform = __webpack_require__(/*! ../../common/transform.js */ "./node_modules/minilog/lib/common/transform.js"),
-    color = __webpack_require__(/*! ./util.js */ "./node_modules/minilog/lib/web/formatters/util.js");
-
-var colors = { debug: ['cyan'], info: ['purple' ], warn: [ 'yellow', true ], error: [ 'red', true ] },
-    logger = new Transform();
-
-logger.write = function(name, level, args) {
-  var fn = console.log;
-  if(console[level] && console[level].apply) {
-    fn = console[level];
-    fn.apply(console, [ '%c'+name+' %c'+level, color('gray'), color.apply(color, colors[level])].concat(args));
-  }
-};
-
-// NOP, because piping the formatted logs can only cause trouble.
-logger.pipe = function() { };
-
-module.exports = logger;
-
-
-/***/ }),
-
-/***/ "./node_modules/minilog/lib/web/formatters/minilog.js":
-/*!************************************************************!*\
-  !*** ./node_modules/minilog/lib/web/formatters/minilog.js ***!
-  \************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var Transform = __webpack_require__(/*! ../../common/transform.js */ "./node_modules/minilog/lib/common/transform.js"),
-    color = __webpack_require__(/*! ./util.js */ "./node_modules/minilog/lib/web/formatters/util.js"),
-    colors = { debug: ['gray'], info: ['purple' ], warn: [ 'yellow', true ], error: [ 'red', true ] },
-    logger = new Transform();
-
-logger.write = function(name, level, args) {
-  var fn = console.log;
-  if(level != 'debug' && console[level]) {
-    fn = console[level];
-  }
-
-  var subset = [], i = 0;
-  if(level != 'info') {
-    for(; i < args.length; i++) {
-      if(typeof args[i] != 'string') break;
-    }
-    fn.apply(console, [ '%c'+name +' '+ args.slice(0, i).join(' '), color.apply(color, colors[level]) ].concat(args.slice(i)));
-  } else {
-    fn.apply(console, [ '%c'+name, color.apply(color, colors[level]) ].concat(args));
-  }
-};
-
-// NOP, because piping the formatted logs can only cause trouble.
-logger.pipe = function() { };
-
-module.exports = logger;
-
-
-/***/ }),
-
-/***/ "./node_modules/minilog/lib/web/formatters/util.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/minilog/lib/web/formatters/util.js ***!
-  \*********************************************************/
-/***/ ((module) => {
-
-var hex = {
-  black: '#000',
-  red: '#c23621',
-  green: '#25bc26',
-  yellow: '#bbbb00',
-  blue:  '#492ee1',
-  magenta: '#d338d3',
-  cyan: '#33bbc8',
-  gray: '#808080',
-  purple: '#708'
-};
-function color(fg, isInverse) {
-  if(isInverse) {
-    return 'color: #fff; background: '+hex[fg]+';';
-  } else {
-    return 'color: '+hex[fg]+';';
-  }
-}
-
-module.exports = color;
-
-
-/***/ }),
-
-/***/ "./node_modules/minilog/lib/web/index.js":
-/*!***********************************************!*\
-  !*** ./node_modules/minilog/lib/web/index.js ***!
-  \***********************************************/
-/***/ ((module, exports, __webpack_require__) => {
-
-var Minilog = __webpack_require__(/*! ../common/minilog.js */ "./node_modules/minilog/lib/common/minilog.js");
-
-var oldEnable = Minilog.enable,
-    oldDisable = Minilog.disable,
-    isChrome = (typeof navigator != 'undefined' && /chrome/i.test(navigator.userAgent)),
-    console = __webpack_require__(/*! ./console.js */ "./node_modules/minilog/lib/web/console.js");
-
-// Use a more capable logging backend if on Chrome
-Minilog.defaultBackend = (isChrome ? console.minilog : console);
-
-// apply enable inputs from localStorage and from the URL
-if(typeof window != 'undefined') {
-  try {
-    Minilog.enable(JSON.parse(window.localStorage['minilogSettings']));
-  } catch(e) {}
-  if(window.location && window.location.search) {
-    var match = RegExp('[?&]minilog=([^&]*)').exec(window.location.search);
-    match && Minilog.enable(decodeURIComponent(match[1]));
-  }
-}
-
-// Make enable also add to localStorage
-Minilog.enable = function() {
-  oldEnable.call(Minilog, true);
-  try { window.localStorage['minilogSettings'] = JSON.stringify(true); } catch(e) {}
-  return this;
-};
-
-Minilog.disable = function() {
-  oldDisable.call(Minilog);
-  try { delete window.localStorage.minilogSettings; } catch(e) {}
-  return this;
-};
-
-exports = module.exports = Minilog;
-
-exports.backends = {
-  array: __webpack_require__(/*! ./array.js */ "./node_modules/minilog/lib/web/array.js"),
-  browser: Minilog.defaultBackend,
-  localStorage: __webpack_require__(/*! ./localstorage.js */ "./node_modules/minilog/lib/web/localstorage.js"),
-  jQuery: __webpack_require__(/*! ./jquery_simple.js */ "./node_modules/minilog/lib/web/jquery_simple.js")
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/minilog/lib/web/jquery_simple.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/minilog/lib/web/jquery_simple.js ***!
-  \*******************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/minilog/lib/common/transform.js");
-
-var cid = new Date().valueOf().toString(36);
-
-function AjaxLogger(options) {
-  this.url = options.url || '';
-  this.cache = [];
-  this.timer = null;
-  this.interval = options.interval || 30*1000;
-  this.enabled = true;
-  this.jQuery = window.jQuery;
-  this.extras = {};
-}
-
-Transform.mixin(AjaxLogger);
-
-AjaxLogger.prototype.write = function(name, level, args) {
-  if(!this.timer) { this.init(); }
-  this.cache.push([name, level].concat(args));
-};
-
-AjaxLogger.prototype.init = function() {
-  if(!this.enabled || !this.jQuery) return;
-  var self = this;
-  this.timer = setTimeout(function() {
-    var i, logs = [], ajaxData, url = self.url;
-    if(self.cache.length == 0) return self.init();
-    // Test each log line and only log the ones that are valid (e.g. don't have circular references).
-    // Slight performance hit but benefit is we log all valid lines.
-    for(i = 0; i < self.cache.length; i++) {
-      try {
-        JSON.stringify(self.cache[i]);
-        logs.push(self.cache[i]);
-      } catch(e) { }
-    }
-    if(self.jQuery.isEmptyObject(self.extras)) {
-        ajaxData = JSON.stringify({ logs: logs });
-        url = self.url + '?client_id=' + cid;
-    } else {
-        ajaxData = JSON.stringify(self.jQuery.extend({logs: logs}, self.extras));
-    }
-
-    self.jQuery.ajax(url, {
-      type: 'POST',
-      cache: false,
-      processData: false,
-      data: ajaxData,
-      contentType: 'application/json',
-      timeout: 10000
-    }).success(function(data, status, jqxhr) {
-      if(data.interval) {
-        self.interval = Math.max(1000, data.interval);
-      }
-    }).error(function() {
-      self.interval = 30000;
-    }).always(function() {
-      self.init();
-    });
-    self.cache = [];
-  }, this.interval);
-};
-
-AjaxLogger.prototype.end = function() {};
-
-// wait until jQuery is defined. Useful if you don't control the load order.
-AjaxLogger.jQueryWait = function(onDone) {
-  if(typeof window !== 'undefined' && (window.jQuery || window.$)) {
-    return onDone(window.jQuery || window.$);
-  } else if (typeof window !== 'undefined') {
-    setTimeout(function() { AjaxLogger.jQueryWait(onDone); }, 200);
-  }
-};
-
-module.exports = AjaxLogger;
-
-
-/***/ }),
-
-/***/ "./node_modules/minilog/lib/web/localstorage.js":
-/*!******************************************************!*\
-  !*** ./node_modules/minilog/lib/web/localstorage.js ***!
-  \******************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var Transform = __webpack_require__(/*! ../common/transform.js */ "./node_modules/minilog/lib/common/transform.js"),
-    cache = false;
-
-var logger = new Transform();
-
-logger.write = function(name, level, args) {
-  if(typeof window == 'undefined' || typeof JSON == 'undefined' || !JSON.stringify || !JSON.parse) return;
-  try {
-    if(!cache) { cache = (window.localStorage.minilog ? JSON.parse(window.localStorage.minilog) : []); }
-    cache.push([ new Date().toString(), name, level, args ]);
-    window.localStorage.minilog = JSON.stringify(cache);
-  } catch(e) {}
-};
-
-module.exports = logger;
 
 /***/ })
 

@@ -46,65 +46,6 @@
         },
         "PRETRAINED": {
             "BODY": "Учащимся предоставляются предварительно обученные модели для использования в проектах. На этих моделях можно обучать более продвинутые версии, так как изначально они могут оказаться довольно сложными и нарабатывать практику машинного обучения."
-        },
-        "FURTHER": {
-            "TITLE": "Дальнейшее изучение",
-            "BODY": "Машинное обучение для детей - полезный инструмент для ознакомления детей с тем, как обучаются системы МО, как они используются, а также с некоторыми практическими кейсами применения ИИ. <br/><br/>Дополнительные материалы для преподавания и обучения, в том числе материалы по системам МО, можно найти на:"
-        }
-    },
-    "LINKS": {
-        "TITLE": "Образовательные ИИ ресурсы для детей",
-        "INTRO": "Эта страница содержит список дополнительных инструментов и ресурсов для объяснения принципов искусственного интеллекта детям.",
-        "ECRAFT2LEARN": {
-            "BODY1": "<a href='http://users.ox.ac.uk/~oucs0030/' target='_blank'>Кен Кан</a> создал ресурсы, позволяющие новичкам создавать программы ИИ в Snap! (среда визуального программирования, похожая на Scratch).",
-            "BODY2": "В то время как я сосредоточился на объяснении того, как ИИ системы обучаются и ведут себя (а также на реальных примерах), у eCraft2Learn есть фантастические ресурсы, которые углубляются в то, как на самом деле работают системы МО.",
-            "BODY3": "<a href='https://ecraft2learn.github.io/ai/AI-Teacher-Guide/chapter-6.html' target='_blank'>Нейросетевой проект Tic Tac Toe</a> особенно увлекателен, позволяя студентам экспериментировать с гиперпараметрами из Snap."
-        },
-        "STEMLEARNING": {
-            "BODY1": "STEM Learning and the UK Department for Business, Energy and Industrial Strategy have created resources for teaching the principles of artificial intelligence.",
-            "BODY2": "These resources include <em>Machine Learning for Kids</em> projects, supplemented with teaching notes, presentation materials, prompt cards, and practical “unplugged” activities"
-        },
-        "RASPBERRYPI": {
-            "BODY1": "The Raspberry Pi Foundation provides resources for Code Clubs, with step-by-step instructions for a variety of creative projects.",
-            "BODY2": "Their machine learning pathway includes a variety of projects from <em>Machine Learning for Kids</em>."
-        },
-        "APPSFORGOOD": {
-            "BODY1": "Apps for Good - это некоммерческая организация, базирующаяся в Великобритании, которая создает ресурсы для преподавания технических предметов, которые они бесплатно предоставляют школам.",
-            "BODY2": "Их курс машинного обучения использует <em>Машинное обучение для детей</em> и дополняет его рядом дополнительных материалов, таких как схемы работы, планы уроков, рабочие тетради для учащихся, презентации и многое другое. Это облегчает школам проведение уроков по МО, которые добавляют упражнения по программированию в контекст урока."
-        },
-        "AIFAMILYCHALLENGE": {
-            "BODY1": "AI Family Challenge - это бесплатная, практическая образовательная программа по ИИ для семей. Они используют <em>Машинное обучение для детей</em> и дополняют его множеством дополнительных средств поддержки, таких как технические тренеры и наставники, структурированный план урока и вспомогательные видеоролики.",
-            "BODY2": "Программа основана на конкурсе, который побуждает детей придумывать свои собственные ИИ-проекты при поддержке их семей и технических наставников."
-        },
-        "MAGENTADEMOS": {
-            "BODY1": "Онлайн игрушка, которая демонстирует разные особенности машинного обучения с использованием TensorFlow.js"
-        },
-        "AIINSCHOOLS": {
-            "BODY1": "Программа AIinSchools предоставляет бесплатный план уроков для учителей по преподаванию ИИ до 9-го класса ( 13-14 лет).",
-            "BODY2": "Это включает в себя как занятия в классе, так и программирование для обучения нейронных сетей на графических процессорах, работающих на AWS."
-        },
-        "TEENSINAI": {
-            "BODY1": "Teens in AI используют комбинацию хакатонов, акселераторов и буткемпов для изучения ИИ молодежью в возрасте 12-18 лет."
-        },
-        "AI4ALL": {
-            "BODY1": "AI4ALL организует летние лагеря для старшеклассников в США, которые дают подробное техническое введение в ИИ."
-        },
-        "CALYPSO": {
-            "BODY1": "Учащиеся использующие роботов Cozmo могут использовать среду программирования Calypso, для получения практического опыта работы с ИИ, например, компьютерное зрение и распознавание речи."
-        },
-        "AIINABOX": {
-            "BODY1": "AI-in-a-Box - это набор роботов, аксессуаров и учебных ресурсов. Этот комплект можно использовать для обучения проектам, охватывающим такие темы, как распознавание образов, распознавание лиц, генерация речи и распознавание речи."
-        },
-        "GOOGLEEXPERIMENTS": {
-            "BODY1": "Простые онлайн-эксперименты, чтобы начать изучать машинное обучение, используя картинки, рисунки, язык и музыку."
-        },
-        "EXPLORINGCS": {
-            "BODY1": "Exploring CS gives students AI knowledge and skills while considering social, moral and ethical impacts.",
-            "BODY2": "They explore practical daily applications of AI that impact their lives.  Students design smart cities, homes and schools.  They also learn to build, train and test an AI system through an NVIDIA platform and look at how the message of AI is communicated."
-        },
-        "VIDEOS": {
-            "TITLE": "Видео",
-            "INTRO": "Я также считаю эти видео полезными при объяснении концепций ИИ:"
         }
     },
     "ERRORS": {
@@ -181,6 +122,7 @@
         "CREATEFIRSTPROJECT": "Нажмите кнопку «плюс» справа, чтобы создать свой первый проект.",
         "RECOGNISING": "Распознавание",
         "PREDICTING": "Прогнозирование",
+        "GENERATING": "Generating",
         "AS": "как",
         "SHARE": "Открыть доступ",
         "UNSHARE": "Закрыть доступ",
@@ -214,12 +156,14 @@
         "TYPES": {
             "TYPELABEL": "Тип проекта",
             "LABEL": "Распознавание",
+            "GENERATE": "generating",
             "NOTES_1": "Какие типы данных вы хотите научить компьютер распознавать?",
             "NOTES_2": "Для слов, предложений или абзацев выберите «текст»",
             "NOTES_3": "Для фотографий, диаграмм и картинок выберите «изображения»",
             "NOTES_4": "Для набора чисел или множественного выбора выберите «числа»",
             "NOTES_5": "Для голосов и звуков выберите «звуки»",
-            "NOTES_6": "Прогнозирование последовательности номеров, выберете \"predicting numbers\""
+            "NOTES_6": "Прогнозирование последовательности номеров, выберете \"predicting numbers\"",
+            "NOTES_7": "To generate new text with a language model, choose \"generating text\""
         },
         "LANGUAGE": {
             "LABEL": "Язык",
@@ -956,6 +900,87 @@
             "TEXT2": "For an explanation of why this process works, try watching \"<a href='https://youtu.be/R9OHn5ZF4Uo'>How Machines Learn</a>\" by CGP Grey."
         }
     },
+    "LANGUAGEMODEL": {
+        "TITLE": "Prepare a language model",
+        "NAME": "language model",
+
+        "AGEWARNING": "If you are under the age of 13, please only use a small language model with supervision from a trusted adult. Generative AI can sometimes generate text that isn't nice or appropriate.",
+
+        "REVIEW": "Review",
+
+        "TYPE": {
+            "TITLE": "Type of language model",
+            "TOY": "Toy",
+            "SMALL": "Small",
+            "LARGE": "Large",
+            "DESCRIPTION_1": "Computers can look for patterns in large numbers of documents. Language models generate text by using those statistical patterns to predict what word could come next.",
+            "DESCRIPTION_2": "Creating a <strong>toy</strong> language model will show you how this works, and see the types of patterns computers look for (in documents you choose yourself).",
+            "DESCRIPTION_3": "Configuring a <strong>small</strong> language model will show you how to use patterns found in millions of documents.",
+            "DESCRIPTION_4": "All of this will help you to understand how <strong>large</strong> language models work in the real world."
+        },
+
+        "CORPUS": {
+            "TITLE": "corpus",
+            "ADD": "Add text",
+            "ADDTEXT": "Add text to corpus",
+            "ADDWIKIPEDIA": "Add Wikipedia page to corpus"
+        },
+
+        "CONTEXTWINDOW": {
+            "TITLE": "Size of context window",
+            "DESCRIPTION": "How much text the model looks at before generating the next word. A smaller window means it works with less previous text. A larger window allows it to use more, which can make responses more accurate but needs more computer memory."
+        },
+
+        "NGRAMS": {
+            "DESCRIPTION_1": "Your model will generate the next word by looking for what word commonly comes next in the text in your corpus. How much should the computer remember of what it has already generated?",
+            "DESCRIPTION_2": "Small window: it only remembers a little, so each choice will be based on just the last word.",
+            "DESCRIPTION_3": "Big window: it remembers more, so each choice will be based on the last few words.",
+
+            "SAMPLE": "sample of the tokens",
+            "COUNTLABEL": "times in your corpus",
+            "PROBABILITYLABEL": "how tokens will be selected",
+            "PROBABILITY": "the green bars show the chance that the model will choose that word to follow ",
+
+            "STOP": "This token represents something that ends a sentence, such as a full-stop (period) or exclamation mark."
+        },
+
+        "TEMPERATURE": {
+            "TITLE": "Temperature",
+            "DESCRIPTION_1": "With a low temperature, the model will generate the next word based on what is most common.",
+            "DESCRIPTION_2": "With a high temperature, the model is more likely to pick something unexpected.",
+            "LOW": "low",
+            "HIGH": "high"
+        },
+        "TOPP": {
+            "TITLE": "Top-p",
+            "DESCRIPTION_1": "With a low value, the model will only consider the most common candidates for the next word.",
+            "DESCRIPTION_2": "With a high value, the model will consider any word that could come next."
+        },
+
+        "SMALL": {
+            "TYPE": "Model architecture",
+            "DOWNLOADING": "Downloading...",
+            "DEVELOPER": "Created by:",
+            "SIZE": "Download size:"
+        },
+
+        "LARGE": {
+            "TITLE": "Large Language Models",
+            "DESCRIPTION": "If you would like to run your own large language model, you can find instructions for how to get started at:"
+        },
+
+        "TESTING": {
+            "TITLE": " Prompt ",
+            "GENERATE": "Generate",
+            "RESET": "Reset",
+            "CLICK": "Click on a word to see why that word was generated",
+            "ERROR": {
+                "TOOSHORT": "You need to add more words to your prompt for the model to work.",
+                "NOTFOUND": "The words at the end of your prompt weren't found anywhere in your corpus."
+            },
+            "SCRATCH": "Use your language model in Scratch"
+        }
+    },
     "MAKES": {
         "TITLE": "Создайте что-нибудь с помощью вашей модели машинного обучения",
         "SCRATCH3": "Используйте свою модель машинного обучения в Scratch",
@@ -1067,6 +1092,7 @@
             "ALL": "Все типы проектов",
             "PREFIX": "Обучите компьютер распознавать",
             "PREFIXREGRESSION": "Обучить компьютер прогнозированию ",
+            "PREFIXLANGUAGE": "Train a computer to generate ",
             "TEXT": "текст",
             "IMAGES": "изображения",
             "NUMBERS": "числа",
@@ -1626,6 +1652,32 @@
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-voicetuner.pdf"
             }
+        },
+        "SHOEBOX": {
+            "TITLE": "Shoebox",
+            "SUMMARY": "Teach a computer to recognize speech",
+            "DESCRIPTION": "Recreate the world's first speech recognition system from 1961.",
+            "WORKSHEET_1": {
+                "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-shoebox.pdf"
+            }
+        },
+        "LANGUAGEMODELS": {
+            "TITLE": "Language models",
+            "SUMMARY": "Teach a computer how to generate text",
+            "DESCRIPTION": "Learn the concepts behind how language models can generate new text",
+            "TEACHERSNOTES_URL": "https://dalelane.co.uk/blog/?p=5538",
+            "WORKSHEET_1": {
+                "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-langmodels.pdf"
+            }
+        },
+        "STORYTELLER": {
+            "TITLE": "Story teller",
+            "SUMMARY": "Use a computer trained to generate text",
+            "DESCRIPTION": "Make a project in Scratch that can generate new stories",
+            "TEACHERSNOTES_URL": "https://dalelane.co.uk/blog/?p=5538",
+            "WORKSHEET_1": {
+                "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-storyteller.pdf"
+            }
         }
     },
     "TEACHER": {
@@ -1846,13 +1898,15 @@
         "PROJECTS": {
             "TITLE": "Project questions",
 
-            "Q4": "Which machine learning models are trained on your computer, and which are trained in the cloud?",
+            "Q4": "Which machine learning models are trained and stored on your computer, and which are trained and stored in the cloud?",
             "Q4-A-0": "You cannot choose where machine learning models are trained and stored. This is decided by Machine Learning for Kids based on the type of project.",
-            "Q4-A-1": "<strong>recognising text</strong> projects are trained in the cloud.",
-            "Q4-A-2": "<strong>recognising numbers</strong> projects are trained in the cloud.",
-            "Q4-A-3": "<strong>recognising sounds</strong> projects are trained on your computer.",
-            "Q4-A-4": "<strong>recognising images</strong> projects are trained on your computer.",
-            "Q4-A-5": "<strong>predicting numbers</strong> projects are trained on your computer.",
+            "Q4-A-1": "<strong>recognising text</strong> projects are trained and stored in the cloud.",
+            "Q4-A-2": "<strong>recognising numbers</strong> projects are trained in the cloud, and stored on your computer.",
+            "Q4-A-3": "<strong>recognising sounds</strong> projects are trained and stored on your computer.",
+            "Q4-A-4": "<strong>recognising images</strong> projects are trained and stored on your computer.",
+            "Q4-A-5": "<strong>predicting numbers</strong> projects are trained and stored on your computer.",
+            "Q4-A-6": "<strong>generating text</strong> projects (<strong>toy</strong> models) are trained in the cloud, and stored on your computer",
+            "Q4-A-7": "<strong>generating text</strong> projects (<strong>small</strong> models) are stored on your computer",
 
             "Q5": "What difference does it make where a project is stored?",
             "Q5-A-0": "You can choose where to store the training data for your machine learning project. You can store your training examples:",

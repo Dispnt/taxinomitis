@@ -171,6 +171,12 @@
                 templateUrl: 'static/components/scratch3/scratch3.html',
                 controllerAs: 'vm'
             })
+            .state('mlproject_slm', {
+                url: '/mlproject/:userId/:projectId/languagemodel',
+                controller: 'LanguageModelController',
+                templateUrl: 'static/components/languagemodel/languagemodel.html',
+                controllerAs: 'vm'
+            })
             .state('mlproject_colab', {
                 url: '/mlproject/:userId/:projectId/colab',
                 controller: 'ColabController',
@@ -213,10 +219,6 @@
                 templateUrl: 'static/components/appinventor/appinventor.html',
                 controllerAs: 'vm'
             })
-            .state('links', {
-                url: '/links',
-                templateUrl: 'static/components/links/links.html#top'
-            })
             .state('stories', {
                 url: '/stories/:storyId',
                 controller: 'StoriesController',
@@ -242,6 +244,12 @@
                 url: '/reset-storage',
                 controller: 'ResetStorageController',
                 templateUrl: 'static/components/resetstorage/resetstorage.html',
+                controllerAs: 'vm'
+            })
+            .state('debugapis', {
+                url: '/debug-apis',
+                controller: 'DebugApisController',
+                templateUrl: 'static/components/debugapi/debugapi.html',
                 controllerAs: 'vm'
             })
             .state('book', {
@@ -303,7 +311,7 @@
         jwtOptionsProvider.config({
             whiteListedDomains: AUTH0_WHITELISTED_DOMAINS,
             tokenGetter: ['options', 'storageService', function (options, storageService) {
-                if (options && options.url.substr(options.url.length - 5) == '.html') {
+                if (options && options.url.substring(options.url.length - 5) == '.html') {
                     return null;
                 }
                 return storageService.getItem('id_token');
@@ -319,17 +327,17 @@
             .useSanitizeValueStrategy('sanitizeParameters')
             .useStaticFilesLoader({
                 prefix: 'static/languages/',
-                suffix: '.json?v=224'
+                suffix: '.json?v=249'
             })
             .determinePreferredLanguage(function () {
                 var lang = navigator.userLanguage || navigator.language;
 
                 // if it is set via query, use that
-                const queries = document.location.search.substr(1).split('&');
+                const queries = document.location.search.substring(1).split('&');
                 for (var i = 0; i < queries.length; i++) {
                     var query = queries[0];
                     if (query.indexOf('lang=') === 0) {
-                        lang = query.substr('lang='.length);
+                        lang = query.substring('lang='.length);
                         break;
                     }
                 }

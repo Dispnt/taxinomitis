@@ -214,7 +214,16 @@
             'WORKSHEETS.MOBILENET.WORKSHEET_1.URL',
 
             'WORKSHEETS.VOICETUNER.TITLE', 'WORKSHEETS.VOICETUNER.SUMMARY', 'WORKSHEETS.VOICETUNER.DESCRIPTION',
-            'WORKSHEETS.VOICETUNER.WORKSHEET_1.URL'
+            'WORKSHEETS.VOICETUNER.WORKSHEET_1.URL',
+
+            'WORKSHEETS.SHOEBOX.TITLE', 'WORKSHEETS.SHOEBOX.SUMMARY', 'WORKSHEETS.SHOEBOX.DESCRIPTION',
+            'WORKSHEETS.SHOEBOX.WORKSHEET_1.URL',
+
+            'WORKSHEETS.LANGUAGEMODELS.TITLE', 'WORKSHEETS.LANGUAGEMODELS.SUMMARY', 'WORKSHEETS.LANGUAGEMODELS.DESCRIPTION',
+            'WORKSHEETS.LANGUAGEMODELS.TEACHERSNOTES_URL', 'WORKSHEETS.LANGUAGEMODELS.WORKSHEET_1.URL',
+
+            'WORKSHEETS.STORYTELLER.TITLE', 'WORKSHEETS.STORYTELLER.SUMMARY', 'WORKSHEETS.STORYTELLER.DESCRIPTION',
+            'WORKSHEETS.STORYTELLER.TEACHERSNOTES_URL', 'WORKSHEETS.STORYTELLER.WORKSHEET_1.URL'
 
         ]).then(function (translations) {
             vm.worksheets = [
@@ -712,6 +721,21 @@
                     ]
                 },
                 {
+                    title : translations['WORKSHEETS.SHOEBOX.TITLE'],
+                    summary : translations['WORKSHEETS.SHOEBOX.SUMMARY'],
+                    description : translations['WORKSHEETS.SHOEBOX.DESCRIPTION'],
+                    difficulty : 'Intermediate',
+                    type : 'sounds',
+                    maketypes : [ 'scratch3' ],
+                    image : 'static/images/project-shoebox.png',
+                    tags : [ 'speech recognition' ],
+                    downloads : [
+                        {
+                            worksheet : translations['WORKSHEETS.SHOEBOX.WORKSHEET_1.URL']
+                        }
+                    ]
+                },
+                {
                     title : translations['WORKSHEETS.RECOMMENDER.TITLE'],
                     summary : translations['WORKSHEETS.RECOMMENDER.SUMMARY'],
                     description : translations['WORKSHEETS.RECOMMENDER.DESCRIPTION'],
@@ -1037,6 +1061,38 @@
                     downloads : [
                         {
                             worksheet : translations['WORKSHEETS.HANDGESTURES.WORKSHEET_1.URL']
+                        }
+                    ]
+                },
+                {
+                    title : translations['WORKSHEETS.LANGUAGEMODELS.TITLE'],
+                    summary : translations['WORKSHEETS.LANGUAGEMODELS.SUMMARY'],
+                    description : translations['WORKSHEETS.LANGUAGEMODELS.DESCRIPTION'],
+                    difficulty : 'Beginner',
+                    type : 'language',
+                    maketypes : [  ],
+                    image : 'static/images/project-languagemodels.png',
+                    tags : [ 'language models', 'LLM', 'generative AI' ],
+                    teachersnotes : translations['WORKSHEETS.LANGUAGEMODELS.TEACHERSNOTES_URL'],
+                    downloads : [
+                        {
+                            worksheet : translations['WORKSHEETS.LANGUAGEMODELS.WORKSHEET_1.URL']
+                        }
+                    ]
+                },
+                {
+                    title : translations['WORKSHEETS.STORYTELLER.TITLE'],
+                    summary : translations['WORKSHEETS.STORYTELLER.SUMMARY'],
+                    description : translations['WORKSHEETS.STORYTELLER.DESCRIPTION'],
+                    difficulty : 'Beginner',
+                    type : 'language',
+                    maketypes : [ 'scratch3' ],
+                    image : 'static/images/project-storyteller.png',
+                    tags : [ 'language models', 'LLM', 'generative AI' ],
+                    teachersnotes : translations['WORKSHEETS.STORYTELLER.TEACHERSNOTES_URL'],
+                    downloads : [
+                        {
+                            worksheet : translations['WORKSHEETS.STORYTELLER.WORKSHEET_1.URL']
                         }
                     ]
                 }

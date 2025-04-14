@@ -4,6 +4,9 @@ export const ROOT                  = '/';
 
 export const ALL_APIS              = '/api/*';
 
+export const K8S_PROBE             = '/api';
+export const ERROR_TEST            = '/api/debug/errors/:errorcode';
+
 export const TEACHERS              = '/api/teachers';
 export const CLASSES               = '/api/classes';
 
@@ -55,6 +58,7 @@ export const LOCALMODELTEST        = '/api/classes/:classid/students/:studentid/
 //
 // URLS supporting browser-storage projects
 export const PREPARE_IMAGES        = '/api/classes/:classid/students/:studentid/training/images';
+export const PREPARE_NGRAMS        = '/api/classes/:classid/students/:studentid/training/ngrams';
 
 //
 // URLs about training data hosting
@@ -72,6 +76,7 @@ export const SCRATCHKEY_STATUS     = '/api/scratch/:scratchkey/status';
 export const SCRATCHKEY_MODEL      = '/api/scratch/:scratchkey/models';
 export const SCRATCHKEY_MODEL_LOCAL= '/api/scratch/:scratchkey/local/models';
 export const SCRATCH3_EXTENSION    = '/api/scratch/:scratchkey/extension3.js';
+export const SCRATCH3_SLMEXTENSION = '/api/scratch/:modelid/:contextwindow/extensionslm.js';
 export const SCRATCHTFJS_EXTENSION = '/api/scratch/:scratchkey/extensiontfjs.js';
 export const SCRATCHTFJS_EXTENSIONS = '/api/scratchtfjs/extensions';
 export const SCRATCH3_EXTENSION_LOCAL = '/api/scratch/:scratchkey/local/:projecttype/extension3.js';
@@ -94,9 +99,5 @@ export const SITEALERTS_PUBLIC     = '/api/sitealerts/public';
 export const SITEALERTS_STUDENT    = '/api/sitealerts/alerts/:classid/students/:studentid';
 export const SITEALERTS_TEACHER    = '/api/sitealerts/alerts/:classid/supervisors/:studentid';
 export const SITEALERTS_REFRESH    = '/api/sitealerts/actions/refresh';
-
-//
-// URLs for third-party services
-export const SPOTIFY_TOKEN         = '/api/services/spotify/token';
 
 // tslint:enable:max-line-length

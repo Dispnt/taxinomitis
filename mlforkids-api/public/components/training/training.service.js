@@ -47,6 +47,14 @@
                     };
                     return browserStorageService.addTrainingData(projectid, trainingObject);
                 }
+                else if (projecttype === 'language') {
+                    var trainingObject = {
+                        type : data.type,
+                        title : data.title,
+                        contents : data.contents
+                    };
+                    return browserStorageService.addTrainingData(projectid, trainingObject);
+                }
                 else {
                     throw new Error('unexpected project type');
                 }
@@ -104,6 +112,15 @@
                             project.storage,
                             trainingitem.imageurl,
                             trainingitem.label);
+                    }));
+                }
+                else if (project.type === 'language') {
+                    return browserStorageService.bulkAddTrainingData(project.id, data.map(function (item) {
+                        return {
+                            type : item.type,
+                            title : item.title,
+                            contents : item.contents
+                        };
                     }));
                 }
                 else {
@@ -374,11 +391,29 @@
             }
             else {
                 url = '/api/classes/' + tenant +
-                        '/students/' + userid +
+                        '/students/' + project.userid +
                         '/projects/' + project.id +
                         '/models/' + modelid;
             }
             return $http.delete(url);
+        }
+
+
+        function storeAsset(project, asset) {
+            if (project.storage === 'local' && project.type === 'language') {
+                return browserStorageService.storeAssetData('language-model-' + project.id, asset);
+            }
+            else {
+                throw new Error('Unsupported project type');
+            }
+        }
+        function retrieveAsset(project) {
+            if (project.storage === 'local' && project.type === 'language') {
+                return browserStorageService.retrieveAsset('language-model-' + project.id);
+            }
+            else {
+                throw new Error('Unsupported project type');
+            }
         }
 
 
@@ -466,6 +501,9 @@
             newTrainingData : newTrainingData,
             bulkAddTrainingData : bulkAddTrainingData,
             uploadImage : uploadImage,
+
+            storeAsset : storeAsset,
+            retrieveAsset : retrieveAsset,
 
             uploadSound : uploadSound,
             getSoundData : getSoundData,

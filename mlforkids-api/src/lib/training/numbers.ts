@@ -19,7 +19,18 @@ export async function trainClassifierCloudProject(project: Objects.Project): Pro
     const training = await store.getNumberTraining(project.id, { start: 0, limit: 3000 });
     const fieldsinfo = await store.getNumberProjectFields(project.userid, project.classid, project.id);
 
-    return trainClassifier(project, training, fieldsinfo);
+    const model = await trainClassifier(project, training, fieldsinfo);
+
+    if (model.urls && model.urls.status && model.status !== 'error')
+    {
+        // don't wait for the model url to be stored, as this is not critical
+        store.storeNumbersClassifier(project.userid, project.classid, project.id, model.urls.status)
+            .catch((err) => {
+                log.error({ err, project }, 'Failed to store classifier info');
+            });
+    }
+
+    return model;
 }
 
 
@@ -36,11 +47,19 @@ export function trainClassifier(
         })
         .catch((err) => {
             if (err.statusCode === httpStatus.BAD_REQUEST) {
+                let errorMessage = err.message;
+                if (err.response &&
+                    err.response.body &&
+                    err.response.body.detail)
+                {
+                    errorMessage = err.response.body.detail;
+                }
+
                 return {
                     key : project.id,
                     status : 'Failed',
                     error : {
-                        message : err.message,
+                        message : errorMessage,
                     },
                 };
             }
