@@ -250,7 +250,7 @@
         "ERRORS": {
             "REQUIRED": "This is required!",
             "TOOLONG": "That's too long!",
-            "EXCEEDLIMIT": "You've reached the limit for the number of projects you can have. You need to delete one of your current projects before you can create another.",
+            "EXCEEDLIMIT": "当前的项目数量已达到上限。如果想创建新项目，得先返回到前面删掉一个旧的项目。",
             "TRYITNOW": "Sorry! You can only create one project at a time if you use 'Try it now'. You need to delete your current project before you can create another."
         },
         "WARNINGS": {
@@ -473,7 +473,7 @@
                     "NUMBERS": "您已经开始使用您收集的数字示例来训练机器学习模型。",
                     "SOUNDS": "You've started training a machine learning model using the examples of sounds that you collected."
                 },
-                "SINCE": "由于这是在训练"
+                "SINCE": "训练开始的时间为"
             },
             "READY": {
                 "CROWDSOURCED": {
@@ -670,116 +670,116 @@
             "TITLE": "测验时间！",
             "INTROQUESTION": "当你在等待模型完成训练时,试着回答这个问题。",
             "PREVIOUSLY_ATTEMPTED": "你以前看过这个 - 让我们看看你有没有记住这次正确答案！",
-            "CORRECT_ANSWER": "那是对的！",
+            "CORRECT_ANSWER": "对了！",
             "INCORRECT_ANSWER": "好可惜！错了。正确答案如上所示。",
             "NEXT_QUESTION": "下一个问题",
             "QUESTION_1": {
-                "QUESTION": "In general, what will help machines to learn better?",
-                "ANSWER_1": "More examples",
-                "ANSWER_2": "Fewer examples",
-                "NOTES_1": "That isn't the only thing that has an effect. But in general, the more examples it has to learn from, the better it should learn."
+                "QUESTION": "一般来说，什么能帮助机器更好地学习？",
+                "ANSWER_1": "更多的例子",
+                "ANSWER_2": "更少的例子",
+                "NOTES_1": "这不是唯一的因素。但一般来说，机器能从更多的例子中学习，学习效果会更好。"
             },
             "QUESTION_2": {
-                "QUESTION": "Which of these would probably be best for training a computer to recognise a photo of an apple?",
-                "ANSWER_1": "Photos of dogs",
-                "ANSWER_2": "Varied photos of different types of apples in different places",
-                "ANSWER_3": "Identical photos of an apple",
-                "ANSWER_4": "Very, very similar photos of the same apple in the same place",
-                "NOTES_1": "The more varied the examples you can collect, the more the system can learn about how to recognise different pictures of an apple.",
-                "NOTES_2": "If every example you give it is the same apple on the same brown wooden table, it might learn that something is only an apple if it's on a brown wooden table."
+                "QUESTION": "哪些内容可能最适合用来训练计算机识别苹果的照片？",
+                "ANSWER_1": "狗的照片",
+                "ANSWER_2": "不同地方、不同种类的苹果照片",
+                "ANSWER_3": "完全相同的苹果照片",
+                "ANSWER_4": "非常相似的苹果照片，拍摄地点相同",
+                "NOTES_1": "收集的例子越丰富，计算机就能学习到如何识别不同的苹果照片。",
+                "NOTES_2": "如果你给的每个例子都是放在同一个棕色木桌上的同一个苹果，计算机可能会认为只有在棕色木桌上才能是苹果。"
             },
             "QUESTION_3": {
-                "QUESTION": "Which of these would be a good use of machine learning?",
-                "ANSWER_1": "Adding big numbers together",
-                "ANSWER_2": "Recognising if an email is spam",
-                "ANSWER_3": "Counting the number of times a button is pressed",
-                "NOTES_1": "Spam filters are a good example of machine learning.",
-                "NOTES_2": "With enough examples of legitimate emails, and enough examples of spam emails, a computer can start to learn how to recognise a spam email."
+                "QUESTION": "以下哪个情况最适合用到机器学习？",
+                "ANSWER_1": "把大数字加起来",
+                "ANSWER_2": "识别邮件是不是垃圾邮件",
+                "ANSWER_3": "鼠标左键按下的次数",
+                "NOTES_1": "垃圾邮件过滤器就是机器学习的一个好例子。",
+                "NOTES_2": "通过足够多的正常邮件和垃圾邮件的例子，计算机可以学习如何识别垃圾邮件。"
             },
             "QUESTION_4": {
-                "QUESTION": "Which of these is NOT a good use of machine learning?",
-                "ANSWER_1": "Sentiment analysis - recognising the mood, tone or emotion in text",
-                "ANSWER_2": "Translating text from one language to another",
-                "ANSWER_3": "Face recognition - recognising a face in a photo and identifying who it is",
-                "ANSWER_4": "Self-driving cars",
-                "ANSWER_5": "Calculating the cost of something in different countries based on exchange rates",
-                "ANSWER_6": "Recommending a movie based on films you've watched before",
-                "NOTES_1": "Tasks that involve following rules which can be worked out are not a good use for machine learning.",
-                "NOTES_2": "A computer isn't going to learn how to apply an exchange rate from examples - we can just tell it what to do."
+                "QUESTION": "以下哪个情况最不适合用到机器学习",
+                "ANSWER_1": "情感分析——识别文本中的情绪、语气或情感",
+                "ANSWER_2": "将文本从一种语言翻译成另一种语言",
+                "ANSWER_3": "面部识别——在照片中识别面孔并确定是谁",
+                "ANSWER_4": "自动驾驶汽车",
+                "ANSWER_5": "根据汇率计算不同国家的生活成本",
+                "ANSWER_6": "根据你看过的电影推荐电影",
+                "NOTES_1": "涉及遵循规则并可以计算出来的任务，不适合使用机器学习。",
+                "NOTES_2": "计算机不会从例子中学会如何应用汇率——我们可以直接告诉它应该怎么做：越贵越高"
             },
             "QUESTION_5": {
-                "QUESTION": "Which of these would be more likely to be successful?",
-                "ANSWER_1": "Collect a small set of examples, train a system, test to see how good it is. Add more examples, train again, and then test again. Repeat until it gets good enough.",
-                "ANSWER_2": "More examples is better, so decide you must need millions of examples. Start collecting a massive set of examples, and spend months collecting more and more and more.",
-                "NOTES_1": "More examples is generally better, but be practical.",
-                "NOTES_2": "Pragmatism is important. Regular testing is useful to let you know how things are going, and help you know when you've done enough.",
-                "NOTES_3": "When you've only got ten examples, another ten examples will probably make a huge difference.",
-                "NOTES_4": "When you've got 100,000 examples, another ten examples probably won't have a noticeable impact."
+                "QUESTION": "以下哪个方法更可能成功？",
+                "ANSWER_1": "收集一小部分例子，训练，并测试它的效果。增加更多的例子，重新训练，再测试。一直重复直到它做得足够好。",
+                "ANSWER_2": "越多例子越好，所以需要收集百万个例子。开始收集大量的例子，花几个月时间不断收集。",
+                "NOTES_1": "更多的例子通常更好，但要务实。",
+                "NOTES_2": "务实非常重要，定期测试可以让你知道进展如何，并帮助你判断什么时候做得够好了。",
+                "NOTES_3": "当你只有十个例子时，再增加十个可能会有很大帮助。",
+                "NOTES_4": "当你有了100,000个例子时，再增加十个可能不会产生明显的效果。"
             },
             "QUESTION_6": {
-                "QUESTION": "Which of these statements is correct?",
-                "ANSWER_1": "Machine learning is a technique where computers can be trained to perform tasks instead of needing to be given an explicit set of steps to follow",
-                "ANSWER_2": "Machine learning is magic",
-                "ANSWER_3": "Machine learning means we don't need to think about problems any more because computers will think for us",
-                "ANSWER_4": "Machine learning has replaced the need for us to learn how to code",
-                "ANSWER_5": "Machine learning can only be done on massive supercomputers"
+                "QUESTION": "以下哪种说法是正确的？",
+                "ANSWER_1": "机器学习是一种让计算机可以通过训练完成任务的方法，而不需要给它明确的步骤。",
+                "ANSWER_2": "机器学习是魔法",
+                "ANSWER_3": "机器学习意味着我们不再需要思考问题，因为计算机会代替我们思考",
+                "ANSWER_4": "机器学习取代了我们学习编程的需求",
+                "ANSWER_5": "机器学习只能在超级计算机上完成"
             },
             "QUESTION_7": {
-                "QUESTION": "A machine learning system trained to recognise pictures with a tree in should be good at which of the following tasks:",
-                "ANSWER_1": "Identifying pictures of fruit",
-                "ANSWER_2": "Recognising the emotion in a piece of writing",
-                "ANSWER_3": "Recognising pictures of trees",
-                "NOTES_1": "Machine learning does not mean computers magically learn to do everything.",
-                "NOTES_2": "It means they learn how to do a specific task by being shown examples of that specific task.",
-                "NOTES_3": "If you want it to do something else, you need to train it to do that as well, by giving it examples of that."
+                "QUESTION": "一个训练用来识别带有树的图片的机器学习系统，应该擅长以下哪个任务：",
+                "ANSWER_1": "识别水果的图片",
+                "ANSWER_2": "识别文本中的情绪",
+                "ANSWER_3": "识别带有树的图片",
+                "NOTES_1": "机器学习并不是计算机自动学会做所有事情。",
+                "NOTES_2": "它是通过展示特定任务的例子来学习如何完成一个特定的任务。",
+                "NOTES_3": "如果你希望它做别的事情，必须给它相关的例子进行训练。"
             },
             "QUESTION_8": {
-                "QUESTION": "Alice and Bob both want to train a machine learning system to recognise if text is happy/positive or sad/negative. Which of them will probably train the best system?",
-                "ANSWER_1": "Alice. She has collected 10 varied examples of happy text, and 10 varied examples of sad text",
-                "ANSWER_2": "Bob. He has collected 1000 examples of happy writing and 10 examples of sad writing",
-                "NOTES_1": "Collecting a roughly similar number of examples for each label is a useful technique.",
-                "NOTES_2": "If nearly every example of writing you train a system with is happy, you might end up training the system to assume that sad writing is very unlikely, and that it should assume happy more often.",
-                "NOTES_4": "But, you might want it to do this.",
-                "NOTES_5": "If you're training a system to recognise text where text is happy 98% of the time, training it with that realistic experience might be worth a try."
+                "QUESTION": "Alice和Bob都想训练一个机器学习系统来识别文本是快乐/积极的，还是悲伤/消极的。谁可能训练出更好的系统？",
+                "ANSWER_1": "Alice，她收集了10个多样的快乐文本例子，和10个多样的悲伤文本例子",
+                "ANSWER_2": "Bob，他收集了1000个快乐文本例子和10个悲伤文本例子",
+                "NOTES_1": "最好个每种标签都收集大致相同数量的例子。",
+                "NOTES_2": "如果你给系统的训练数据几乎全是快乐的文本，它可能会认为悲伤的文本很少见，因此更倾向于认为文本是快乐的。",
+                "NOTES_4": "但是，如果有时你可能需要特地这样做。",
+                "NOTES_5": "如果你训练的系统是用来识别大多数文本是快乐的（比如98%的情况），那样的训练数据可能是值得尝试的。"
             },
             "QUESTION_9": {
-                "QUESTION": "Advanced machine learning technology will always give correct answers. Incorrect answers mean the machine learning technology isn't very good",
-                "ANSWER_1": "True",
-                "ANSWER_2": "False",
-                "NOTES_1": "Not necessarily.",
-                "NOTES_3": "The technology and algorithms are important. BUT machine learning systems are only as accurate and reliable as the training they are given.",
-                "NOTES_4": "Simple machine learning algorithms with a lot of high quality training can do better than the most advanced machine learning algorithms with a small amount of poor quality training."
+                "QUESTION": "高级的机器学习技术总是会给出正确的答案。不正确的答案意味着机器学习技术不好。",
+                "ANSWER_1": "正确",
+                "ANSWER_2": "错误",
+                "NOTES_1": "不一定。",
+                "NOTES_3": "技术和算法确实很重要。但机器学习系统的准确性和可靠性，取决于它所接受的训练数据。",
+                "NOTES_4": "有大量高质量训练数据的简单机器学习算法，往往能比有少量低质量训练数据的复杂算法做得更好。"
             },
             "QUESTION_10": {
-                "QUESTION": "How can you make sure your collection of animal pictures is good quality for training a machine and doesn't contain human mistakes?",
-                "ANSWER_1": "Manually inspect all of the pictures of animals yourself and make sure you agree with all of the labels",
-                "ANSWER_2": "Ask lots of people to label all the images and keep the training labels that people generally agree on",
-                "ANSWER_3": "Trick question! Humans are always right - machines make mistakes!",
-                "NOTES_1": "Even humans make mistakes and you won't always have time to double check all the training data!",
-                "NOTES_2": "If the task is tricky it can be a good idea to get more than one person to label each image and keep the label that the most humans agree is the right one."
+                "QUESTION": "如何确保你的动物照片集合质量好，并且没有人为错误？",
+                "ANSWER_1": "人工检查所有动物的照片，确保检查过所有的标签",
+                "ANSWER_2": "让很多人看图片标签，并保留大多数人认为正确的标签",
+                "ANSWER_3": "题目不对！！人类永远是对的，只有机器才会犯错！",
+                "NOTES_1": "人类也会犯错，而且你不会总有时间检查所有的训练数据！",
+                "NOTES_2": "如果任务很复杂，最好让不止一个人给每张图片打标签，保留大多数人一致认为正确的标签。"
             },
             "QUESTION_11": {
-                "QUESTION": "A machine trained to identify pictures of \"food\" or \"not food\" gives inconsistent results for sandwiches, often putting them in the \"not food\" class. Which of the following could explain that?",
-                "ANSWER_1": "The human who trained the system doesn't like sandwiches and didn't put any in the training data",
-                "ANSWER_2": "The machine has to be in the right mood for a sandwich so it changes its mind a lot",
-                "ANSWER_3": "Sandwiches are not food. The system is right to be unsure",
-                "NOTES_1": "Machine learning models can only learn from the examples we show them.",
-                "NOTES_2": "It is very easy for humans to accidentally introduce their likes and dislikes into machine learning models so we should be very careful about what training data we use."
+                "QUESTION": "一个被训练用来识别“食物”或“非食物”照片的机器，给出的三明治结果不稳定，经常把它们放入“非食物”类别。以下哪种解释可能是正确的？",
+                "ANSWER_1": "训练系统的人不喜欢三明治，所以没有把三明治的照片放入训练数据中",
+                "ANSWER_2": "机器需要有正确的心情才能识别三明治，因此它经常改变主意",
+                "ANSWER_3": "三明治不是食物，系统对不确定的判断是正确的",
+                "NOTES_1": "机器学习模型只能从我们提供的例子中学习。",
+                "NOTES_2": "人类很容易把自己的喜好和厌恶带入机器学习模型中，因此我们需要非常小心地选择训练数据。"
             },
             "QUESTION_12": {
-                "QUESTION": "Which of the following best describes unsupervised learning?",
-                "ANSWER_1": "Writing a program that contains lots of if/else statements to determine the result",
-                "ANSWER_2": "A machine learning algorithm that uses unlabelled data and classifies it based on how similar one dataset is to another",
-                "ANSWER_3": "A machine learning algorithm that uses labelled data and classifies it based on training from example input-output pairs",
-                "NOTES_1": "Unsupervised learning is a type of machine learning, whereas only using if/else statements is not.",
-                "NOTES_2": "Unsupervised learning algorithms are still trained, but the inputs that are given to it are not labelled or classified.",
-                "NOTES_3": "If the data is labelled then this is what's known as supervised learning."
+                "QUESTION": "以下哪种说法最能描述无监督学习？",
+                "ANSWER_1": "写一个包含许多 如果...那么... 语句来决定结果的程序",
+                "ANSWER_2": "一种使用未标记数据并根据数据集间的相似性进行分类的机器学习算法",
+                "ANSWER_3": "一种使用已标记数据并基于示例输入输出对进行训练的机器学习算法",
+                "NOTES_1": "无监督学习是一种机器学习方法，而单纯使用 如果...那么... 语句不是。",
+                "NOTES_2": "无监督学习算法依然是通过训练的，但它所接收的输入数据没有标记或分类。",
+                "NOTES_3": "如果数据是标记的，那么这就是所谓的监督学习。"
             },
             "QUESTION_13": {
-                "QUESTION": "Without machine learning, it would be impossible for search engines such as Google to exist.",
-                "ANSWER_1": "True",
-                "ANSWER_2": "False",
-                "NOTES_1": "Whilst many modern search engines do use machine learning, it is possible to create one without it. A basic search engine will just look for documents (web pages) that include the words the user searches for."
+                "QUESTION": "没有机器学习，像百度这样的搜索引擎是无法存在的。",
+                "ANSWER_1": "正确",
+                "ANSWER_2": "错误",
+                "NOTES_1": "虽然许多现代搜索引擎确实使用了机器学习，但没有它也是可以创建一个搜索引擎的。一个基础的搜索引擎只会寻找包含用户搜索词的文档（网页）。"
             }
         }
     },
@@ -1116,9 +1116,9 @@
             "CONTRIBUTE": "If you do, please consider <a href='https://github.com/IBM/taxinomitis-docs/blob/master/README.md#contributions'>contributing it for others to use</a>."
         },
         "DESCRIBETHEGLASS": {
-            "TITLE": "Describe the glass",
-            "SUMMARY": "Teach a computer to predict your answers",
-            "DESCRIPTION": "Create a game in Scratch that learns when you describe a glass as half-full or half-empty.",
+            "TITLE": "描述玻璃杯",
+            "SUMMARY": "教会计算机预测你的回答",
+            "DESCRIPTION": "在 Scratch 中创建一个游戏，让计算机学习玻璃杯是半满还是半空。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-describetheglass.pdf"
             },
@@ -1145,7 +1145,7 @@
         "MAKEMEHAPPY": {
             "TITLE": "让我开心",
             "SUMMARY": "教电脑认识恭维和侮辱",
-            "DESCRIPTION": "在Scratch中创造一个角色,如果你对它说好话就会微笑,如果你说出有意义的东西就会哭泣。",
+            "DESCRIPTION": "在Scratch中创造一个角色,如果你对它说好话就会笑,如果你说出有意义的东西就会哭泣。",
             "WORKSHEET_1": {
                 "DESCRIPTION": "Full version of the project, where the students make a non-machine learning version first",
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-makemehappy-zhcn.pdf"
@@ -1162,14 +1162,14 @@
         },
         "SNAP": {
             "TITLE": " Snap！",
-            "SUMMARY": "教一台计算机识别图标的样子",
-            "DESCRIPTION": "在Scratch中制作纸牌游戏,学习识别卡片的图片。",
+            "SUMMARY": "教计算机识别图标的样子",
+            "DESCRIPTION": "在 Scratch 中制作一个卡牌游戏，让计算机学习识别你的卡牌。",
             "WORKSHEET_1": {
-                "DESCRIPTION": "Full version of the project, where the students make their own cards that they will train the computer to recognise",
+                "DESCRIPTION": "完整版本的项目，学生制作自己的卡牌，训练计算机识别",
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-snap.pdf"
             },
             "WORKSHEET_2": {
-                "DESCRIPTION": "Shorter version of the project, providing children with pre-made cards that you will need to print out, to save the students time having to make them",
+                "DESCRIPTION": "简化版方案，只需打印出预先设计好的卡片，省去学生自己制作卡片的时间。",
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-snap-easy.pdf",
                 "RESOURCES": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/resources-snap-easy.pdf"
             },
@@ -1213,49 +1213,49 @@
         },
         "CARORCUP": {
             "TITLE": "汽车或杯子",
-            "SUMMARY": "教一台计算机识别物体的图片",
-            "DESCRIPTION": "训练计算机,以便能够将照片分组。",
+            "SUMMARY": "教会计算机识别物体的图片",
+            "DESCRIPTION": "训练计算机能够将照片分类分组",
             "WORKSHEET_1": {
-                "DESCRIPTION": "Individual version of the project, where each student trains their own machine learning model independently",
+                "DESCRIPTION": "独立版本的项目，每个学生独立训练自己的机器学习模型",
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-carorcup.pdf"
             },
             "WORKSHEET_2": {
-                "DESCRIPTION": "Group version of the project, where students in the class work together to train a shared machine learning model",
+                "DESCRIPTION": "小组版本的项目，班级中的学生一起训练共享的机器学习模型",
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-carorcup-crowd.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-carorcup.pdf"
         },
         "FACELOCK": {
-            "TITLE": "面部锁定",
+            "TITLE": "面部解锁",
             "SUMMARY": "教电脑识别面孔",
-            "DESCRIPTION": "如果它能够识别你的脸,那么在Scratch中制作一个可解锁的手机。",
+            "DESCRIPTION": "在 Scratch 中制作一个手机，当它识别你的面孔时解锁",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-facelock.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-facelock.pdf"
         },
         "JOURNEYTOSCHOOL": {
-            "TITLE": "学校之旅",
-            "SUMMARY": "教一台计算机进行预测",
-            "DESCRIPTION": "训练计算机,以便能够预测你早上如何前往学校。",
+            "TITLE": "上学之旅",
+            "SUMMARY": "教会计算机做预测",
+            "DESCRIPTION": "训练计算机预测你早上怎么去学校",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-journeytoschool.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-journeytoschool.pdf"
         },
         "SHYPANDA": {
-            "TITLE": "害羞的熊猫",
+            "TITLE": "羞羞熊猫",
             "SUMMARY": "教电脑识别图片",
-            "DESCRIPTION": "让一只跳舞的熊猫变得害羞,如果它看到你的样子就停止跳舞。",
+            "DESCRIPTION": "在 Scratch 中制作一个跳舞的熊猫，如果它看到你在看它，它就会害羞停止跳舞。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-shypanda.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-shypanda.pdf"
         },
         "VIRTUALPET": {
-            "TITLE": "Virtual Pet",
-            "SUMMARY": "Teach a computer to recognise pictures",
-            "DESCRIPTION": "Train the computer to recognise what you're doing so you can look after a virtual pet.",
+            "TITLE": "虚拟宠物",
+            "SUMMARY": "教会计算机识别网络摄像头画面",
+            "DESCRIPTION": "训练计算机识别你在做什么，来照顾一个虚拟宠物。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-virtualpet.pdf"
             },
@@ -1263,8 +1263,8 @@
         },
         "PACMAN": {
             "TITLE": "吃豆人",
-            "SUMMARY": "教电脑玩游戏",
-            "DESCRIPTION": "在Scratch中创建一个吃豆人游戏,学习如何避免鬼魂。",
+            "SUMMARY": "教会计算机玩游戏",
+            "DESCRIPTION": "在 Scratch 中制作一个吃豆人游戏，让电脑学会如何躲怪。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-pacman.pdf"
             },
@@ -1275,11 +1275,11 @@
             "SUMMARY": "教电脑识别问题",
             "DESCRIPTION": "创建一个聊天机器人,可以回答有关您选择的主题的问题。",
             "WORKSHEET_1": {
-                "DESCRIPTION": "Scratch project - for making a chat bot in Scratch",
+                "DESCRIPTION": "Scratch 项目 - 制作一个聊天机器人",
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-chatbots.pdf"
             },
             "WORKSHEET_2": {
-                "DESCRIPTION": "Python project - for making a chat bot using Python",
+                "DESCRIPTION": "Python 项目 - 使用 Python 制作一个聊天机器人",
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-chatbots-python.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-chatbots.pdf"
@@ -1287,30 +1287,30 @@
         "TOURISTINFO": {
             "TITLE": "旅游信息",
             "SUMMARY": "教电脑提出建议",
-            "DESCRIPTION": "在Scratch中创建一个移动应用程序,根据人们的兴趣推荐旅游景点。",
+            "DESCRIPTION": "在Scratch中创建一个App,根据人们的兴趣推荐旅游景点。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-touristinfo.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-touristinfo.pdf"
         },
         "SORTINGHAT": {
-            "TITLE": "排序帽子",
-            "SUMMARY": "教电脑识别语言的使用",
-            "DESCRIPTION": "创建一个像哈利波特一样的分类帽子,根据你的说法将你带入学校。",
+            "TITLE": "分院帽",
+            "SUMMARY": "教会计算机识别语言的使用",
+            "DESCRIPTION": "制作一个像哈利波特中的分院帽，根据你说的话将你分到不同的学院。",
             "WORKSHEET_1": {
-                "DESCRIPTION": "Individual version of the project, where each student trains their own machine learning model independently",
+                "DESCRIPTION": "个人版本的项目，每个学生独立训练自己的机器学习模型",
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-sortinghat.pdf"
             },
             "WORKSHEET_2": {
-                "DESCRIPTION": "Group version of the project, where students in the class work together to train a shared machine learning model",
+                "DESCRIPTION": "小组版本的项目，班级中的学生一起训练共享的机器学习模型",
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-sortinghat-crowd.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-sortinghat.pdf"
         },
         "ROCKPAPERSCISSORS": {
-            "TITLE": "摇滚,纸,剪刀",
+            "TITLE": "石头剪刀布",
             "SUMMARY": "教一台计算机识别形状",
-            "DESCRIPTION": "在Scratch中制作一个岩石,纸张,剪刀游戏,学习识别手形。",
+            "DESCRIPTION": "在 Scratch 中制作一个石头剪刀布游戏，教计算机学习识别手势",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-rockpaperscissors.pdf"
             },
@@ -1319,13 +1319,13 @@
         "JUDGEABOOK": {
             "TITLE": "判断一本书",
             "SUMMARY": "教电脑识别视觉风格",
-            "DESCRIPTION": "用Scratch制作游戏,以测试是否真的可以通过封面判断一本书。",
+            "DESCRIPTION": "制作一个游戏，测试是否真的可以通过书的封面来判断一本书。",
             "WORKSHEET_1": {
-                "DESCRIPTION": "Full version of the Scratch project, where children make a game to compete against the computer to recognise books",
+                "DESCRIPTION": "完整版本的 Scratch 项目，学生制作一个游戏，和电脑竞争识别书籍",
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-judgeabook.pdf"
             },
             "WORKSHEET_2": {
-                "DESCRIPTION": "Simplified version of the Scratch project, where children get the computer to recognise books",
+                "DESCRIPTION": "简化版本的 Scratch 项目，学生让电脑识别书籍",
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-judgeabook-easy.pdf"
             },
             "WORKSHEET_3": {
@@ -1335,17 +1335,17 @@
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-judgeabook.pdf"
         },
         "LOCATELARRY": {
-            "TITLE": "找到拉里",
-            "SUMMARY": "教电脑查找图片中的内容",
-            "DESCRIPTION": "制作一个\"哪里的Wally？\" Scratch中的风格游戏,并教电脑找到你的角色。",
+            "TITLE": "寻找Larry",
+            "SUMMARY": "教会计算机在图片中找到某个物体",
+            "DESCRIPTION": "在 Scratch 中制作一个类似\"找瓦力\"的游戏，教计算机找到你的角色。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-locatelarry.pdf"
             }
         },
         "FOOLED": {
-            "TITLE": "Fooled",
+            "TITLE": "被整了",
             "SUMMARY": "教电脑识别水果",
-            "DESCRIPTION": "了解计算机如何被混淆,如果受到严重训练,就会犯错误。",
+            "DESCRIPTION": "了解计算机如何被误导，以及如果训练不当，计算机可能会犯错误。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-fooled.pdf"
             },
@@ -1353,17 +1353,17 @@
         },
         "SCHOOLLIBRARY": {
             "TITLE": "学校图书馆",
-            "SUMMARY": "教电脑提出建议",
-            "DESCRIPTION": "在Scratch中创建一个学校图书馆员,建议读者可能适合阅读。",
+            "SUMMARY": "教会计算机做推荐",
+            "DESCRIPTION": "在 Scratch 中制作一个赛博学校图书管理员，推荐适合的书。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-schoollibrary.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-schoollibrary.pdf"
         },
         "NOUGHTSANDCROSSES": {
-            "TITLE": " Noughts＆Crosses ",
+            "TITLE": "井字棋",
             "SUMMARY": "教电脑玩游戏",
-            "DESCRIPTION": "在Python中创造一个没有的东西并穿过游戏来学习如何击败你。",
+            "DESCRIPTION": "在 Python 中创建一个井字棋游戏，让电脑学会如何击败你。",
             "WORKSHEET_1": {
                 "DESCRIPTION": "Classroom version, where each student makes the game themselves in Scratch",
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-noughtsandcrosses.pdf"
@@ -1379,133 +1379,133 @@
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-noughtsandcrosses.pdf"
         },
         "TOPTRUMPS": {
-            "TITLE": "顶级特朗普",
+            "TITLE": "Top Trumps",
             "SUMMARY": "教电脑玩游戏",
-            "DESCRIPTION": "训练一台计算机,以便能够在Scratch中玩顶级特朗普纸牌游戏。",
+            "DESCRIPTION": "训练电脑在Scratch中玩Top Trumps卡牌游戏。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-toptrumps.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-toptrumps.pdf"
         },
         "HEADLINES": {
-            "TITLE": "头条新闻",
+            "TITLE": "新闻标题",
             "SUMMARY": "测试计算机识别语言使用的能力",
-            "DESCRIPTION": "训练计算机识别全国性报纸的头条新闻。",
+            "DESCRIPTION": "训练计算机识别来自国家报纸的新闻标题。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-headlines.pdf"
             }
         },
         "NEWSPAPERSHELVES": {
-            "TITLE": "Newspaper shelves",
-            "SUMMARY": "Test the computer's ability to recognise use of language",
-            "DESCRIPTION": "Train a computer to recognise headlines from national newspapers.",
+            "TITLE": "报纸书架",
+            "SUMMARY": "测试计算机识别语言使用的能力",
+            "DESCRIPTION": "训练计算机识别来自国家报纸的新闻标题。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-headlines-easy.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-headlines-easy.pdf"
         },
         "HEADLINETESTING": {
-            "TITLE": "Headline testing",
-            "SUMMARY": "Test the computer's ability to recognise use of language",
-            "DESCRIPTION": "Create a testing tool in Scratch to measure how good a machine learning model is",
+            "TITLE": "新闻标题测试",
+            "SUMMARY": "测试计算机识别语言使用的能力",
+            "DESCRIPTION": "在 Scratch 中创建一个测试工具，用来衡量一个机器学习模型的表现。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-headlines.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-headlines.pdf"
         },
         "FINDIT": {
-            "TITLE": "Find It!",
-            "SUMMARY": "Teach a computer to recognise pictures",
-            "DESCRIPTION": "Make a hide-and-seek game for your mobile phone",
+            "TITLE": "找到它！！",
+            "SUMMARY": "教会计算机识别图片",
+            "DESCRIPTION": "为手机制作一个捉迷藏游戏。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-findit.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-findit.pdf"
         },
         "ALIENLANGUAGE": {
-            "TITLE": "Alien Language",
-            "SUMMARY": "Teach a computer to recognize sounds",
-            "DESCRIPTION": "Make an alien in Scratch that learns to recognize an alien language",
+            "TITLE": "外星语言",
+            "SUMMARY": "教会计算机识别声音",
+            "DESCRIPTION": "在 Scratch 中制作一个外星人，它可以学会识别外星语言。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-alienlanguage.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-alienlanguage.pdf"
         },
         "SECRETCODE": {
-            "TITLE": "Secret Code",
-            "SUMMARY": "Teach a computer to recognize speech",
-            "DESCRIPTION": "Train a computer to understand secret code words to guide a spy.",
+            "TITLE": "秘密代码",
+            "SUMMARY": "教会计算机识别语音",
+            "DESCRIPTION": "训练计算机理解秘密代码，帮助间谍完成任务。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-secretcode.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-secretcode.pdf"
         },
         "JARGONBUSTER": {
-            "TITLE": "Jargon Buster",
-            "SUMMARY": "Teach a computer to listen for words",
-            "DESCRIPTION": "Make a project in Scratch that displays the meaning of words you say.",
+            "TITLE": "术语解码器",
+            "SUMMARY": "教会计算机识别听到的词汇",
+            "DESCRIPTION": "在 Scratch 中制作一个项目，显示你说的单词的意思。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-jargonbuster.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-jargonbuster.pdf"
         },
         "TITANIC": {
-            "TITLE": "Titanic",
-            "SUMMARY": "Teach a computer to predict outcomes",
-            "DESCRIPTION": "Create a Python program that can predict who survived the sinking of the Titanic.",
+            "TITLE": "泰坦尼克",
+            "SUMMARY": "教会计算机预测结果",
+            "DESCRIPTION": "制作一个 Python 程序，预测谁在泰坦尼克号沉船事故中幸存。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-titanic-python.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-titanic.pdf"
         },
         "ZOMBIEESCAPE": {
-            "TITLE": "Zombie Escape!",
-            "SUMMARY": "Teach a computer to make predictions",
-            "DESCRIPTION": "Train a computer to help you escape from the zombies",
+            "TITLE": "僵尸逃生！",
+            "SUMMARY": "教会计算机做预测",
+            "DESCRIPTION": "训练计算机帮助你逃离僵尸大军的追击",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-zombieescape.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-zombieescape.pdf"
         },
         "PHISHING": {
-            "TITLE": "Phishing",
-            "SUMMARY": "Teach a computer to recognize phishing web links",
-            "DESCRIPTION": "Create a Python program that can predict if a URL is legitimate",
+            "TITLE": "钓鱼网站",
+            "SUMMARY": "教会计算机识别钓鱼网站链接",
+            "DESCRIPTION": "制作一个 Python 程序，预测一个网址是否是合法的",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-phishing.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-phishing.pdf"
         },
         "KIWIORSTOAT": {
-            "TITLE": "Kiwi or Stoat",
-            "SUMMARY": "Teach a computer to recognize photos of animals",
-            "DESCRIPTION": "Make a project in Scratch that can recognize the animals in photos from conservation sites",
+            "TITLE": "奇异鸟还是黄鼬",
+            "SUMMARY": "教会计算机识别动物照片",
+            "DESCRIPTION": "在 Scratch 中制作一个项目，识别保护区网站上动物的照片",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-kiwiorstoat.pdf"
             }
         },
         "INKBLOTS": {
-            "TITLE": "Ink blots",
-            "SUMMARY": "Teach a computer to recognize photos of objects",
-            "DESCRIPTION": "Recreate an MIT research project and learn about how AI systems are described in the news.",
+            "TITLE": "墨迹测试",
+            "SUMMARY": "教会计算机识别物体照片",
+            "DESCRIPTION": "重现麻省理工的项目，了解 AI 系统在它们的新闻中的描述。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-inkblots.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-inkblots.pdf"
         },
         "FACEFINDER": {
-            "TITLE": "Face Finder",
-            "SUMMARY": "Use a computer that has been trained to recognize faces",
-            "DESCRIPTION": "Make a video filter in Scratch to turn your face into a cartoon.",
+            "TITLE": "面部寻找",
+            "SUMMARY": "使用训练好的机器识别人脸",
+            "DESCRIPTION": "在 Scratch 中制作一个视频滤镜，把你的脸变成卡通。",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-facefinder.pdf"
             },
             "TEACHERSNOTES_URL": "https://github.com/IBM/taxinomitis-docs/raw/master/teachers-notes/pdf/teachersnotes-facefinder.pdf"
         },
         "EMOJIMASK": {
-            "TITLE": "Emoji Mask",
-            "SUMMARY": "Use a computer that has been trained to recognize faces",
-            "DESCRIPTION": "Make a video filter in Scratch to add an emoji mask to your face.",
+            "TITLE": "Emoji 面具",
+            "SUMMARY": "使用训练好的机器识别人脸",
+            "DESCRIPTION": "在 Scratch 中制作一个滤镜，给你的脸加上一个emoji面具",
             "WORKSHEET_1": {
                 "URL": "https://github.com/IBM/taxinomitis-docs/raw/master/project-worksheets/pdf/worksheet-emojimask.pdf"
             },
